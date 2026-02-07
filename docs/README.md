@@ -1,0 +1,2 @@
+# Introduction
+For component-specfic readmes, please refer to the individual component folders in the `src/components` directory. Each component folder contains a README.md file with detailed information about that specific component, including its props, usage examples, and any additional notes or considerations.
