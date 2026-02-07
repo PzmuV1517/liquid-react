@@ -1,5 +1,7 @@
 # Liquid-React
 
+One small step for man, One huge leap for mankind.
+
 ## Introduction
 
 **What is Liquid-React?**
@@ -52,3 +54,6 @@ Make sure the component you are using supports the props you are passing, and re
 
 ## Contributing
 We welcome contributions to Liquid-React! We try to regularly update the library with new components Apple releases, but because we are also students, we might not always be able to keep up with the pace of Apple's updates. If you want to contribute, please check out our [contributing guidelines](CONTRIBUTING.md) for more information on how to get started.
+
+##Notes
+They said it can't be done. We proved them wrong.
