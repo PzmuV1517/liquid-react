@@ -1,0 +1,42 @@
+{
+  "name": "liquid-react",
+  "version": "1.0.0",
+  "description": "Production-ready React Native iOS module exposing Apple's native UIKit Liquid Glass components",
+  "main": "index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "uikit",
+    "liquid-glass",
+    "native",
+    "apple",
+    "material"
+  ],
+  "author": "Andrei Banu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PzmuV1517/liquid-react.git"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.65.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.73.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "src/",
+    "ios/",
+    "liquid-react.podspec",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,111 @@
+import Foundation
+import UIKit
+import React
+
+@objc(LRNativeMaterialViewManager)
+class LRNativeMaterialViewManager: RCTViewManager {
+    
+    override func view() -> UIView! {
+        return NativeMaterialView()
+    }
+    
+    override static func requiresMainQueueSetup() -> Bool {
+        return true
+    }
+}
+
+class NativeMaterialView: UIView {
+    
+    private var effectView: UIVisualEffectView!
+    
+    @objc var material: NSString = "systemMaterial" {
+        didSet {
+            updateMaterial()
+        }
+    }
+    
+    @objc var onPress: RCTBubblingEventBlock?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.clipsToBounds = true
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.clipsToBounds = true
+        setupView()
+    }
+    
+    private func setupView() {
+        // Create blur effect view - will be kept at the back
+        let blurEffect = getBlurEffect(for: material as String)
+        effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.frame = bounds
+        effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        effectView.isUserInteractionEnabled = false
+        // Use insertSubview at 0 to always keep blur at the back
+        insertSubview(effectView, at: 0)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    private func updateMaterial() {
+        let blurEffect = getBlurEffect(for: material as String)
+        effectView.effect = blurEffect
+    }
+    
+    private func getBlurEffect(for material: String) -> UIBlurEffect {
+        let style: UIBlurEffect.Style
+        
+        switch material {
+        case "systemUltraThinMaterial":
+            style = .systemUltraThinMaterial
+        case "systemThinMaterial":
+            style = .systemThinMaterial
+        case "systemMaterial":
+            style = .systemMaterial
+        case "systemThickMaterial":
+            style = .systemThickMaterial
+        case "systemChromeMaterial":
+            style = .systemChromeMaterial
+        case "systemUltraThinMaterialLight":
+            style = .systemUltraThinMaterialLight
+        case "systemThinMaterialLight":
+            style = .systemThinMaterialLight
+        case "systemMaterialLight":
+            style = .systemMaterialLight
+        case "systemThickMaterialLight":
+            style = .systemThickMaterialLight
+        case "systemChromeMaterialLight":
+            style = .systemChromeMaterialLight
+        case "systemUltraThinMaterialDark":
+            style = .systemUltraThinMaterialDark
+        case "systemThinMaterialDark":
+            style = .systemThinMaterialDark
+        case "systemMaterialDark":
+            style = .systemMaterialDark
+        case "systemThickMaterialDark":
+            style = .systemThickMaterialDark
+        case "systemChromeMaterialDark":
+            style = .systemChromeMaterialDark
+        default:
+            style = .systemMaterial
+        }
+        
+        return UIBlurEffect(style: style)
+    }
+    
+    @objc private func handleTap() {
+        onPress?([:])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        effectView.frame = bounds
+        // Keep blur behind all React Native children
+        sendSubviewToBack(effectView)
+    }
+}
