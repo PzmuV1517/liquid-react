@@ -157,6 +157,27 @@ function ContainerExample() {
 }
 ```
 
+### Tab Bar Usage
+
+> **Note:** You must set the height of the tab bar using the `style` prop. The `barHeight` prop is only for internal native sizing and does not affect the outer view. Example usage:
+
+```jsx
+<NativeTabBar
+  items={[
+    { title: 'Home', icon: 'house' },
+    { title: 'Search', icon: 'magnifyingglass' },
+    { title: 'Settings', icon: 'gearshape' },
+  ]}
+  selectedIndex={selectedTab}
+  onTabPress={(e) => setSelectedTab(e.nativeEvent.index)}
+  translucent={true}
+  style={{ ...styles.tabBar, height: 95 }}
+/>
+```
+
+- Always set the desired height in the style prop for NativeTabBar.
+- The tab bar will not resize automatically based on content; you must specify the height you want.
+
 ## Available Components
 
 ### Materials & Containers
@@ -239,10 +260,6 @@ type ButtonStyle =
 ## License
 
 MIT
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Documentation
 

@@ -15,6 +15,12 @@ class LRNativeTabBarManager: RCTViewManager {
 }
 
 class NativeTabBar: UIView {
+            @objc var barHeight: NSNumber? = nil
+
+        override var intrinsicContentSize: CGSize {
+            let height = barHeight?.doubleValue ?? 49.0
+            return CGSize(width: UIView.noIntrinsicMetric, height: CGFloat(height))
+        }
     
     private var tabBar: UITabBar!
     
@@ -126,7 +132,8 @@ class NativeTabBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        tabBar.frame = bounds
+        let height = barHeight?.doubleValue ?? Double(bounds.height)
+        tabBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: CGFloat(height))
     }
 }
 
