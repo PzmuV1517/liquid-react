@@ -14,12 +14,11 @@ Liquid-React is a React Native iOS-only module that provides direct access to Ap
 
 - ✅ **Real Native UIKit** - Uses `UIVisualEffectView`, `UIButton`, `UINavigationBar`, etc.
 - ✅ **Public APIs Only** - 100% App Store safe
-- ✅ **True Liquid Glass** - iOS controls all blur, vibrancy, depth, and motion
+- ✅ **True Liquid Glass** - Unlike other “liquid glass” libraries that rely on blur effects or shader-based imitations, LiquidReact renders *real, native* iOS Liquid Glass components. The components are implemented using UIKit and participate directly in the system’s material compositing pipeline. **All visual rendering is handled by iOS itself**, ensuring authentic appearance, behavior, and performance **consistent with Apple’s native UI.**
 - ✅ **Zero Custom Rendering** - No Skia, no Metal, no shaders
 - ✅ **iOS Minimum Version:** 13.0
+- ✅ **iOS Minimum Version for Liquid Glass:** iOS 26.0+ (iOS 13-18 will render in different styles based on the iOS version, but all are still real, native system materials)
 - ✅ **Swift 5.0**
-
-Unlike other "liquid glass" libraries that use blur effects or shaders to imitate the look, Liquid-React delegates **all visual rendering to iOS**.
 
 ## Installation
 
@@ -264,14 +263,12 @@ MIT
 ## Documentation
 
 See [docs/](./docs/) for detailed architecture and API reference.
-
-```
 Make sure the component you are using supports the props you are passing, and refer to the documentation for more details on available props and their usage.
 
 ## Contributing
 We welcome contributions to Liquid-React! We try to regularly update the library with new components Apple releases, but because we are also students, we might not always be able to keep up with the pace of Apple's updates. If you want to contribute, please check out our [contributing guidelines](CONTRIBUTING.md) for more information on how to get started.
 
-##Notes
+## Notes
 They said it can't be done. We proved them wrong.
 
 ---
@@ -320,7 +317,7 @@ final class NativeSegmentedControlView: UIView {
 - Do not simulate glass
 - Do not rely on JS animations
 
-**Final Note:**
-This is not a React Native bug. It is a UIKit limitation. Controls with material rendering must be managed according to Apple’s requirements for full visual fidelity.
+**Notice:**
+This is not a React Native or liquid-react bug. It is a UIKit limitation. Controls with material rendering must be managed according to Apple’s requirements for full visual fidelity.
 
 ---
