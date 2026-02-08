@@ -59,6 +59,7 @@ class NativeSwitch: UIView {
     private func setupSwitch() {
         switchControl = UISwitch()
         switchControl.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(switchControl)
     }
     

@@ -15,14 +15,17 @@ class LRNativeMaterialViewManager: RCTViewManager {
 }
 
 class NativeMaterialView: UIView {
+        // WARNING: This implementation is currently broken. React Native children do not render correctly.
     
     private var effectView: UIVisualEffectView!
+    private var contentView: UIView!
     
     @objc var material: NSString = "systemMaterial" {
         didSet {
             updateMaterial()
         }
     }
+        // ...existing code...
     
     @objc var onPress: RCTBubblingEventBlock?
     
@@ -39,18 +42,35 @@ class NativeMaterialView: UIView {
     }
     
     private func setupView() {
-        // Create blur effect view - will be kept at the back
+        // Create blur effect view at the back
         let blurEffect = getBlurEffect(for: material as String)
         effectView = UIVisualEffectView(effect: blurEffect)
         effectView.frame = bounds
         effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         effectView.isUserInteractionEnabled = false
-        // Use insertSubview at 0 to always keep blur at the back
-        insertSubview(effectView, at: 0)
-        
+        addSubview(effectView)
+        // Create a content view for React Native children
+        contentView = UIView()
+        contentView.frame = bounds
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.backgroundColor = .clear
+        addSubview(contentView)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         addGestureRecognizer(tapGesture)
     }
+        // MARK: - React Native subview management
+        override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
+            contentView.insertSubview(subview, at: atIndex)
+        }
+        override func removeReactSubview(_ subview: UIView!) {
+            subview.removeFromSuperview()
+        }
+        override func reactSubviews() -> [UIView]! {
+            return contentView.subviews
+        }
+        override func didUpdateReactSubviews() {
+            contentView.setNeedsLayout()
+        }
     
     private func updateMaterial() {
         let blurEffect = getBlurEffect(for: material as String)
@@ -105,7 +125,6 @@ class NativeMaterialView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         effectView.frame = bounds
-        // Keep blur behind all React Native children
-        sendSubviewToBack(effectView)
+        contentView.frame = bounds
     }
 }

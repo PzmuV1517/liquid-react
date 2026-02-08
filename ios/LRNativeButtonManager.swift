@@ -45,6 +45,7 @@ class NativeButton: UIView {
     private func setupButton() {
         var configuration = UIButton.Configuration.filled()
         button = UIButton(configuration: configuration, primaryAction: nil)
+        button.translatesAutoresizingMaskIntoConstraints = true
         button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         button.addTarget(self, action: #selector(handlePress), for: .touchUpInside)
         addSubview(button)

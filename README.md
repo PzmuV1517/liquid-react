@@ -8,6 +8,8 @@
 
 Liquid-React is a React Native iOS-only module that provides direct access to Apple's native UIKit components, rendered using the same Liquid Glass pipeline Apple uses in its own apps. This is **not** a simulation or recreation—it's a thin declarative bridge to real UIKit views.
 
+> ⚠️ **WARNING:** The NativeMaterialView component is currently broken. React Native children do not render correctly inside it. Do not use NativeMaterialView until this issue is resolved.
+
 **Why choose Liquid-React?**
 
 - ✅ **Real Native UIKit** - Uses `UIVisualEffectView`, `UIButton`, `UINavigationBar`, etc.

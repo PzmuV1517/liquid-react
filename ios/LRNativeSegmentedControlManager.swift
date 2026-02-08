@@ -47,6 +47,8 @@ class NativeSegmentedControl: UIView {
     private func setupSegmentedControl() {
         segmentedControl = UISegmentedControl()
         segmentedControl.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
+        segmentedControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(segmentedControl)
     }
     
