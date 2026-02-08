@@ -273,3 +273,54 @@ We welcome contributions to Liquid-React! We try to regularly update the library
 
 ##Notes
 They said it can't be done. We proved them wrong.
+
+---
+
+## ⚠️ UISegmentedControl “Liquid Glass” Rendering Bug
+
+**Summary:**
+UISegmentedControl is functionally correct, but its native material (Liquid Glass) selection rendering is unstable when embedded in a React Native–bridged custom view. The highlight only appears during press/drag and disappears on release because UIKit cannot resolve the control’s material environment and settled appearance state.
+
+**Root Cause:**
+UIKit requires:
+- No custom styling (backgroundColor, tintColor, selectedSegmentTintColor must be nil)
+- Segments must be added before setting selectedSegmentIndex
+- Layout must be forced after selection and frame changes
+- The control must be inside a real material ancestor (UIVisualEffectView)
+- Frame must be stable before selection settles
+
+**Minimal Correct Implementation:**
+```swift
+final class NativeSegmentedControlView: UIView {
+  private let materialView = UIVisualEffectView(
+    effect: UIBlurEffect(style: .systemMaterial)
+  )
+  private let segmentedControl = UISegmentedControl()
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    addSubview(materialView)
+    materialView.contentView.addSubview(segmentedControl)
+  }
+  required init?(coder: NSCoder) { fatalError() }
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    materialView.frame = bounds
+    segmentedControl.frame = bounds.insetBy(dx: 4, dy: 4)
+    segmentedControl.setNeedsLayout()
+    segmentedControl.layoutIfNeeded()
+  }
+}
+```
+
+**What NOT to Do:**
+- Do not style the control
+- Do not override draw methods
+- Do not use Auto Layout
+- Do not set clear backgrounds
+- Do not simulate glass
+- Do not rely on JS animations
+
+**Final Note:**
+This is not a React Native bug. It is a UIKit limitation. Controls with material rendering must be managed according to Apple’s requirements for full visual fidelity.
+
+---
