@@ -337,21 +337,6 @@ export const RNNativeCustomView =
 - ❌ No custom drawing
 - ❌ No private APIs
 
-## Version Compatibility
-
-### Minimum Requirements
-- iOS 13.0+
-- Swift 5.0+
-- React Native 0.65.0+
-
-### iOS Version Differences
-Different iOS versions render materials differently. This is **expected and correct**—iOS controls the visuals.
-
-iOS 13: Initial Liquid Glass materials  
-iOS 14: Enhanced vibrancy  
-iOS 15: Refined blur algorithms  
-iOS 16+: Continued refinements  
-
 ## Build Configuration
 
 ### CocoaPods Integration
