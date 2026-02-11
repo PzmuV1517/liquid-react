@@ -32,9 +32,9 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
         }
     }
     
-    @objc var onChangeText: RCTBubblingEventBlock?
-    @objc var onSearchPress: RCTBubblingEventBlock?
-    @objc var onCancelPress: RCTBubblingEventBlock?
+    @objc var onTextChanged: RCTDirectEventBlock?
+    @objc var onSearchPressed: RCTDirectEventBlock?
+    @objc var onCancelPressed: RCTDirectEventBlock?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,18 +60,18 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
     // MARK: - UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        onChangeText?(["text": searchText])
+        onTextChanged?(["text": searchText])
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        onSearchPress?(["text": searchBar.text ?? ""])
+        onSearchPressed?(["text": searchBar.text ?? ""])
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.text = ""
-        onCancelPress?([:])
+        onCancelPressed?([:])
     }
     
     override func layoutSubviews() {

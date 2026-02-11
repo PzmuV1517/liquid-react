@@ -14,6 +14,7 @@ import {
   RNNativeGroupedContainer,
   RNNativeCardContainer,
   RNNativeStackView,
+  RNNativeMenuButton,
 } from './nativeComponents';
 import type {
   NativeMaterialViewProps,
@@ -29,6 +30,7 @@ import type {
   NativeGroupedContainerProps,
   NativeCardContainerProps,
   NativeStackViewProps,
+  NativeMenuButtonProps,
 } from './types';
 
 /**
@@ -151,6 +153,16 @@ export const NativeCardContainer: React.FC<NativeCardContainerProps> = (props) =
  */
 export const NativeStackView: React.FC<NativeStackViewProps> = (props) => {
   return <RNNativeStackView {...props} style={[styles.defaultStack, props.style]} />;
+};
+
+/**
+ * NativeMenuButton - Standalone UIButton with UIMenu pull-down
+ * 
+ * Shows a native iOS pull-down menu anchored to the button.
+ * Works anywhere (no UIToolbar parent required).
+ */
+export const NativeMenuButton: React.FC<NativeMenuButtonProps> = (props) => {
+  return <RNNativeMenuButton {...props} style={props.style} />;
 };
 
 const styles = StyleSheet.create({

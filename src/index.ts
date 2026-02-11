@@ -13,6 +13,7 @@ export {
   NativeGroupedContainer,
   NativeCardContainer,
   NativeStackView,
+  NativeMenuButton,
 } from './components';
 
 // Type exports
@@ -45,4 +46,5 @@ export type {
   NativeGroupedContainerProps,
   NativeCardContainerProps,
   NativeStackViewProps,
+  NativeMenuButtonProps,
 } from './types';

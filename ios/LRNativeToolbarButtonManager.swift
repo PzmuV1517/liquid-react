@@ -17,6 +17,7 @@ class LRNativeToolbarButtonManager: RCTViewManager {
 class NativeToolbarButtonContainer: UIView {
     
     private(set) var barButtonItem: UIBarButtonItem!
+    weak var parentToolbar: NativeToolbar?
     
     @objc var icon: NSString = "" {
         didSet {
@@ -47,8 +48,12 @@ class NativeToolbarButtonContainer: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
-        self.isHidden = true
-        self.frame = CGRect.zero
+        // Keep the view in the hierarchy (not hidden) so RCTBubblingEventBlock
+        // can dispatch events to JS. Make it invisible instead.
+        self.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+        self.clipsToBounds = true
+        self.alpha = 0
+        self.isUserInteractionEnabled = false
     }
     
     required init?(coder: NSCoder) {
@@ -114,6 +119,12 @@ class NativeToolbarButtonContainer: UIView {
     }
     
     @objc private func handlePress() {
-        onPress?([:])
+        let data: [String: Any] = ["icon": icon as String, "title": title as String]
+        // Dispatch through parent toolbar (visible view) so RN receives the event
+        if let toolbar = parentToolbar {
+            toolbar.dispatchButtonPress(data)
+        } else {
+            onPress?(data)
+        }
     }
 }

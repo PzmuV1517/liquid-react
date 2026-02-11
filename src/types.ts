@@ -137,9 +137,9 @@ onValueChange?: BubblingEventHandler<SegmentedControlValueChangeEvent>;
 export interface NativeSearchBarProps extends ViewProps {
 placeholder?: string;
 text?: string;
-onChangeText?: BubblingEventHandler<SearchBarChangeEvent>;
-onSearchPress?: BubblingEventHandler<SearchBarChangeEvent>;
-onCancelPress?: BubblingEventHandler<{}>;
+onTextChanged?: DirectEventHandler<SearchBarChangeEvent>;
+onSearchPressed?: DirectEventHandler<SearchBarChangeEvent>;
+onCancelPressed?: DirectEventHandler<{}>;
 }
 
 export interface NativeNavigationBarProps extends ViewProps {
@@ -193,4 +193,10 @@ axis?: StackAxis;
 spacing?: number;
 alignment?: StackAlignment;
 distribution?: StackDistribution;
+}
+export interface NativeMenuButtonProps extends ViewProps {
+  icon?: string;
+  tintColorHex?: string;
+  menuItems: ToolbarMenuItem[];
+  onMenuAction?: DirectEventHandler<ToolbarMenuActionEvent>;
 }

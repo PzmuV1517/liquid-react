@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Production-ready React Native iOS module exposing Apple's native UIKit Liquid Glass components",
   "main": "index.js",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"

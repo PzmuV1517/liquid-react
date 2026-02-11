@@ -42,13 +42,18 @@ class NativeToolbarMenuContainer: UIView {
         }
     }
     
-    @objc var onMenuAction: RCTBubblingEventBlock?
+    @objc var onMenuAction: RCTDirectEventBlock?
+    weak var parentToolbar: NativeToolbar?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
-        self.isHidden = true
-        self.frame = CGRect.zero
+        // Keep the view in the hierarchy (not hidden) so RCTDirectEventBlock
+        // can dispatch events to JS. Make it invisible instead.
+        self.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+        self.clipsToBounds = true
+        self.alpha = 0
+        self.isUserInteractionEnabled = false
     }
     
     required init?(coder: NSCoder) {
@@ -106,7 +111,13 @@ class NativeToolbarMenuContainer: UIView {
                 }
                 
                 let action = UIAction(title: title, image: image, attributes: attributes) { [weak self] _ in
-                    self?.onMenuAction?(["id": actionId, "title": title])
+                    let data: [String: Any] = ["id": actionId, "title": title]
+                    // Dispatch through parent toolbar (visible view) so RN receives the event
+                    if let toolbar = self?.parentToolbar {
+                        toolbar.dispatchMenuAction(data)
+                    } else {
+                        self?.onMenuAction?(data)
+                    }
                 }
                 elements.append(action)
             }
