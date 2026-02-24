@@ -47,7 +47,7 @@ import { NativeMaterialView, NativeButton } from 'liquid-react';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <NativeMaterialView 
+      <NativeMaterialView
         material="systemUltraThinMaterial"
         style={styles.material}
       >
@@ -55,7 +55,7 @@ export default function App() {
         <Text style={styles.subtitle}>
           Native iOS components in React Native
         </Text>
-        
+
         <NativeButton
           title="Get Started"
           buttonStyle="filled"
@@ -121,7 +121,7 @@ function SettingsForm() {
         value={enabled}
         onValueChange={(e) => setEnabled(e.nativeEvent.value)}
       />
-      
+
       <NativeSegmentedControl
         segments={['Light', 'Dark', 'Auto']}
         selectedIndex={theme}
