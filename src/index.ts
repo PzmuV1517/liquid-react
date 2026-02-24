@@ -21,7 +21,6 @@ export type {
   MaterialType,
   ButtonStyle,
   ToolbarSystemItem,
-  ToolbarItem,
   ToolbarMenuItem,
   TabBarSystemItem,
   TabBarItem,
