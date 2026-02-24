@@ -1,0 +1,25 @@
+name: SwiftLint
+
+on:
+  push:
+    branches: [main, staging, forProduction]
+    paths:
+      - 'ios/**'
+  pull_request:
+    branches: [main, staging]
+    paths:
+      - 'ios/**'
+
+jobs:
+  swiftlint:
+    name: Swift Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --config .swiftlint.yml

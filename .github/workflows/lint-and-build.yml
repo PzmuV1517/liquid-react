@@ -1,0 +1,37 @@
+name: Lint & Build
+
+on:
+  push:
+    branches: [main, staging, forProduction]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  lint-and-build:
+    name: ESLint, Prettier & TypeScript
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Prettier check
+        run: npm run format:check
+
+      - name: TypeScript type-check
+        run: npm run typecheck
+
+      - name: TypeScript build
+        run: npm run build
