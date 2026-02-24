@@ -6,7 +6,6 @@ on:
     paths:
       - 'ios/**'
   pull_request:
-    branches: [main, staging]
     paths:
       - 'ios/**'
 
