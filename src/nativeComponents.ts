@@ -18,7 +18,7 @@ import type {
 
 // On web, requireNativeComponent doesn't exist — fall back to View.
 const req = Platform.OS === 'web'
-  ? () => View as any
+  ? () => View as unknown
   : requireNativeComponent;
 
 // Native component registration

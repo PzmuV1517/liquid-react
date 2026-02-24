@@ -1,4 +1,4 @@
-import { requireNativeComponent, ViewProps } from 'react-native';
+import { ViewProps } from 'react-native';
 import type { BubblingEventHandler, DirectEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
 
 // Material types
@@ -111,13 +111,13 @@ index: number;
 // Component prop types
 export interface NativeMaterialViewProps extends ViewProps {
 material?: MaterialType;
-onPress?: BubblingEventHandler<{}>;
+onPress?: BubblingEventHandler<Record<string, never>>;
 }
 
 export interface NativeButtonProps extends ViewProps {
 title: string;
 buttonStyle?: ButtonStyle;
-onPress?: BubblingEventHandler<{}>;
+onPress?: BubblingEventHandler<Record<string, never>>;
 }
 
 export interface NativeSwitchProps extends ViewProps {
@@ -139,7 +139,7 @@ placeholder?: string;
 text?: string;
 onTextChanged?: DirectEventHandler<SearchBarChangeEvent>;
 onSearchPressed?: DirectEventHandler<SearchBarChangeEvent>;
-onCancelPressed?: DirectEventHandler<{}>;
+onCancelPressed?: DirectEventHandler<Record<string, never>>;
 }
 
 export interface NativeNavigationBarProps extends ViewProps {
@@ -157,7 +157,7 @@ icon?: string;
 title?: string;
 systemItem?: ToolbarSystemItem;
 disabled?: boolean;
-onPress?: BubblingEventHandler<{}>;
+onPress?: BubblingEventHandler<Record<string, never>>;
 }
 
 export interface NativeToolbarMenuProps extends ViewProps {
