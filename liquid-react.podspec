@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.version      = package['version']
   s.summary      = package['description']
   s.description  = <<-DESC
-                   Production-ready React Native iOS module that exposes Apple's native UIKit components 
+                   Production-ready React Native iOS module that exposes Apple's native UIKit components
                    for authentic Liquid Glass rendering. Uses only public APIs.
                    DESC
   s.homepage     = package['repository']['url']
