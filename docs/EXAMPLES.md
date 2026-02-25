@@ -1,6 +1,6 @@
 # Examples
 
-This directory contains comprehensive examples of using Liquid-React components.
+This page contains comprehensive examples of using Liquid-React components.
 
 ## Complete App Example
 

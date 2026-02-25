@@ -36,6 +36,15 @@ We have a few standards that we ask all contributors to follow when submitting a
 
  **9. OS and IDE:** We would prefer that all contributions be made on a macOS device using Xcode and a code editor of your choice (VSCode, WebStorm, etc) to ensure that the code is properly tested and works as expected on the intended platform. However, we understand that not everyone has access to a macOS device, so if you are contributing from a different operating system, please make sure to test your changes on an iOS simulator or device to ensure compatibility. This is important because we want to make sure that all contributions work as expected on the intended platform and do not introduce any issues or bugs. If you are unable to test your changes on an iOS simulator or device, please let us know in the pull request description so that we can assist you with testing and ensure that your contribution meets our standards.
 
+ **10. Docstrings:** We ask that all code contributions include docstrings for any new functions, classes, or components that are added to the codebase. For new source files (files containing code), a file-level docstring should be included at the top of the file in this format:
+ ```txt
+    /**
+    * A brief description of the file's purpose and contents.
+    *
+    * License exactly as in the LICENSE file. (can be copy-pasted from there)
+    */
+ ```
+
 ## Style guidelines
 
 When contributing to Liquid-React, please follow our style guidelines to ensure that your code is consistent with the rest of the library. This includes using clear and descriptive variable names, writing comments where necessary, and following the existing code structure.
@@ -44,9 +53,26 @@ When contributing to Liquid-React, please follow our style guidelines to ensure 
 - Use PascalCase for component names.
 - Write clear and concise comments to explain the purpose of your code.
 - All commits should be prefixed with the type of change in this format:
+
+What Was Changed[optional Argument]: Short description of the change
+Where `What Was Changed` is one of the following:
+
 ```txt
-[fix/feat/refactor/docs] Short description of the change
+- `Added` - for new components, functions, or features
+- `Changed` - for changes to existing code that do not add new features (e.g., refactoring, code cleanup, etc)
+- `Fixed` - for bug fixes
+- `Docs` - for documentation changes
+- `Other` - for changes that do not fit into the above categories (e.g., changes to the build process, CI/CD configuration, etc)
 ```
+
+And `optional Argument` can be used to provide additional context about the change, such as the name of the component that was changed or the type of bug that was fixed. For example:
+
+```txt
+- `Added(Button): New Button component with customizable styles`
+- `Fixed(NativeMaterialView): Resolved issue with incorrect rendering on iOS 14`
+- `Docs(readTheDocs): Updated index.rst with new table of contents`
+```
+
 - Use the present tense in commit messages (e.g., "Add new feature" instead of "Added new feature").
 - Keep commit messages concise and to the point, ideally under 50 characters for the subject line and 72 characters for the body.
 - Use present tense in commit messages (e.g., "Add new feature" instead of "Added new feature").

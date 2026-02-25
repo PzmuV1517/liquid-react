@@ -233,9 +233,12 @@ import { NativeMaterialView } from 'liquid-react';
 
 function MyComponent() {
   if (Platform.OS !== 'ios') {
-    return <View style={styles.fallback} />;
+    <View style={styles.fallback}>
+      <Text>Liquid-React is iOS-only</Text>
+    </View>;
+    return 0;
   }
-  
+
   return <NativeMaterialView material="systemMaterial" />;
 }
 ```
@@ -247,9 +250,9 @@ Or use React Native's platform-specific files:
 
 ## App Store Compliance
 
-✅ Liquid-React uses only public APIs  
-✅ Safe for App Store submission  
-✅ No private frameworks or hacks  
+✅ Liquid-React uses only public APIs
+✅ Safe for App Store submission
+✅ No private frameworks or hacks
 
 See [App Store Compliance](./APP_STORE_COMPLIANCE.md) for details.
 
