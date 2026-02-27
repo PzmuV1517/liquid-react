@@ -40,11 +40,15 @@ Liquid-React is a production-ready React Native iOS module that exposes Apple's 
 - `NativeSwitch` - UISwitch toggle control
 - `NativeSegmentedControl` - UISegmentedControl picker
 - `NativeSearchBar` - UISearchBar for search input
+- `NativeMenuButton` - standalone UIButton with UIMenu dropdown
 
 ### Navigation
 - `NativeNavigationBar` - UINavigationBar for top navigation
-- `NativeToolbar` - UIToolbar for bottom toolbars
+- `NativeToolbar` - UIToolbar for bottom toolbars (use `NativeToolbarButton`/`NativeToolbarMenu` as children)
+- `NativeToolbarButton` - UIBarButtonItem inside a toolbar
+- `NativeToolbarMenu` - UIBarButtonItem with UIMenu
 - `NativeTabBar` - UITabBar for tab navigation
+- `NativeStackView` - UIStackView for axis-based layouts
 
 ## Learning Path
 

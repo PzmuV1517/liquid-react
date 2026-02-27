@@ -15,6 +15,7 @@ import {
   NativeSearchBar,
   NativeNavigationBar,
   NativeToolbar,
+  NativeToolbarButton,
   NativeTabBar,
   NativeGroupedContainer,
   NativeCardContainer,
@@ -88,8 +89,8 @@ export default function App() {
           <NativeSearchBar
             placeholder="Search..."
             text={searchText}
-            onChangeText={(e) => setSearchText(e.nativeEvent.text)}
-            onSearchPress={(e) => console.log('Search:', e.nativeEvent.text)}
+            onTextChanged={(e) => setSearchText(e.nativeEvent.text)}
+            onSearchPressed={(e) => console.log('Search:', e.nativeEvent.text)}
             style={styles.searchBar}
           />
         </NativeGroupedContainer>
@@ -167,17 +168,13 @@ export default function App() {
       </ScrollView>
 
       {/* Toolbar */}
-      <NativeToolbar
-        items={[
-          { systemItem: 'add' },
-          { systemItem: 'flexibleSpace' },
-          { title: 'Custom' },
-          { systemItem: 'flexibleSpace' },
-          { systemItem: 'done' },
-        ]}
-        translucent={true}
-        style={styles.toolbar}
-      />
+      <NativeToolbar translucent={true} style={styles.toolbar}>
+        <NativeToolbarButton systemItem="add" onPress={() => {}} />
+        <NativeToolbarButton systemItem="flexibleSpace" />
+        <NativeToolbarButton title="Custom" onPress={() => {}} />
+        <NativeToolbarButton systemItem="flexibleSpace" />
+        <NativeToolbarButton systemItem="done" onPress={() => {}} />
+      </NativeToolbar>
 
       {/* Tab Bar */}
       <NativeTabBar

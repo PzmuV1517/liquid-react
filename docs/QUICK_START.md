@@ -144,8 +144,8 @@ function SearchScreen() {
     <NativeSearchBar
       placeholder="Search..."
       text={query}
-      onChangeText={(e) => setQuery(e.nativeEvent.text)}
-      onSearchPress={(e) => performSearch(e.nativeEvent.text)}
+      onTextChanged={(e) => setQuery(e.nativeEvent.text)}
+      onSearchPressed={(e) => performSearch(e.nativeEvent.text)}
     />
   );
 }

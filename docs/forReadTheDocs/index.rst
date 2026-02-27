@@ -1,3 +1,22 @@
-.. This text is here to serve as a placeholder for the index page of the readTheDocs documentation.
-.. This folder (forReadTheDocs/) is meant to be the root of the rtd documentation, not for github. For .md docuemntation,
-.. view the root docs/ folder and/or the README.md file in the root of the repository.
+liquid-react
+============
+
+React Native bindings for real UIKit components. This isn't a blur approximation or a custom renderer — it's ``UIButton``, ``UISwitch``, ``UIToolbar``, ``UITabBar``, etc., exposed through a thin bridge. iOS renders everything.
+
+Requires iOS 13+. Liquid Glass requires iOS 26+. iOS only.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   getting-started
+   components
+   api
+   examples
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
+
