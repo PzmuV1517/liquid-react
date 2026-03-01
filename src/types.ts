@@ -1,5 +1,8 @@
-import { requireNativeComponent, ViewProps } from 'react-native';
-import type { BubblingEventHandler, DirectEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
+import type { ViewProps } from 'react-native';
+import type { ReactNode } from 'react';
+
+type BubblingEventHandler<T> = (event: T) => void;
+type DirectEventHandler<T> = (event: T) => void;
 
 // Material types
 export type MaterialType =
@@ -63,6 +66,13 @@ icon?: string;
 destructive?: boolean;
 disabled?: boolean;
 children?: ToolbarMenuItem[];
+}
+
+export interface ToolbarItem {
+  icon?: string;
+  title?: string;
+  systemItem?: ToolbarSystemItem;
+  disabled?: boolean;
 }
 
 export interface ToolbarMenuActionEvent {
@@ -147,9 +157,19 @@ title?: string;
 translucent?: boolean;
 }
 
+// Event carrying icon+title of the bar button that was tapped.
+export interface ToolbarButtonPressEvent {
+  icon: string;
+  title: string;
+}
+
 export interface NativeToolbarProps extends ViewProps {
-translucent?: boolean;
-children?: React.ReactNode;
+  translucent?: boolean;
+  children?: ReactNode;
+  /** Fires when a NativeToolbarButton child is pressed. */
+  onToolbarButtonPress?: DirectEventHandler<ToolbarButtonPressEvent>;
+  /** Fires when a NativeToolbarMenu child action is triggered. */
+  onToolbarMenuAction?: DirectEventHandler<ToolbarMenuActionEvent>;
 }
 
 export interface NativeToolbarButtonProps extends ViewProps {

@@ -95,6 +95,8 @@ class NativeToolbarButtonContainer: UIView {
         case "edit": type = .edit
         case "save": type = .save
         case "add": type = .add
+        case "flexibleSpace": type = .flexibleSpace
+        case "fixedSpace": type = .fixedSpace
         case "compose": type = .compose
         case "reply": type = .reply
         case "action": type = .action

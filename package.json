@@ -2,9 +2,11 @@
   "name": "liquid-react",
   "version": "1.0.0",
   "description": "Production-ready React Native iOS module exposing Apple's native UIKit Liquid Glass components",
-  "main": "index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -28,11 +30,11 @@
     "react-native": ">=0.65.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-native": "^0.73.0",
+    "@types/react": "^19.0.0",
     "typescript": "^5.0.0"
   },
   "files": [
+    "lib/",
     "src/",
     "ios/",
     "liquid-react.podspec",

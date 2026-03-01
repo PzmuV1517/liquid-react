@@ -33,6 +33,7 @@ export type {
   SearchBarChangeEvent,
   TabBarPressEvent,
   ToolbarMenuActionEvent,
+  ToolbarButtonPressEvent,
   NativeMaterialViewProps,
   NativeButtonProps,
   NativeSwitchProps,

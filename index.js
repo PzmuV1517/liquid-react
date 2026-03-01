@@ -1,2 +1,2 @@
-// Export everything from src/index.ts
-export * from './src/index';
+// Re-export compiled library output
+module.exports = require('./lib/index');

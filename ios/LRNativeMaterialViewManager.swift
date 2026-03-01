@@ -25,8 +25,6 @@ class NativeMaterialView: UIView {
             updateMaterial()
         }
     }
-        // ...existing code...
-    
     @objc var onPress: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {

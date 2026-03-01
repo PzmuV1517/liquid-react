@@ -16,23 +16,35 @@ import type {
   NativeMenuButtonProps,
 } from './types';
 
-// On web, requireNativeComponent doesn't exist — fall back to View.
-const req = Platform.OS === 'web'
-  ? () => View as any
-  : requireNativeComponent;
+/**
+ * Resolves a native component by name.
+ * On web (Expo Web / react-native-web), falls back to a plain View
+ * to avoid a crash at module load time.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function createNativeComponent<T>(name: string): React.ComponentType<T> {
+  if (Platform.OS === 'web') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return View as unknown as React.ComponentType<T>;
+  }
+  // HostComponent<T> is React.ComponentClass<T> at runtime; the cast resolves
+  // dual-React-types version conflicts between the library and the host app.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return requireNativeComponent<T>(name) as unknown as React.ComponentType<T>;
+}
 
 // Native component registration
-export const RNNativeMaterialView = req<NativeMaterialViewProps>('LRNativeMaterialView');
-export const RNNativeButton = req<NativeButtonProps>('LRNativeButton');
-export const RNNativeSwitch = req<NativeSwitchProps>('LRNativeSwitch');
-export const RNNativeSegmentedControl = req<NativeSegmentedControlProps>('LRNativeSegmentedControl');
-export const RNNativeSearchBar = req<NativeSearchBarProps>('LRNativeSearchBar');
-export const RNNativeNavigationBar = req<NativeNavigationBarProps>('LRNativeNavigationBar');
-export const RNNativeToolbar = req<NativeToolbarProps>('LRNativeToolbar');
-export const RNNativeToolbarButton = req<NativeToolbarButtonProps>('LRNativeToolbarButton');
-export const RNNativeToolbarMenu = req<NativeToolbarMenuProps>('LRNativeToolbarMenu');
-export const RNNativeTabBar = req<NativeTabBarProps>('LRNativeTabBar');
-export const RNNativeGroupedContainer = req<NativeGroupedContainerProps>('LRNativeGroupedContainer');
-export const RNNativeCardContainer = req<NativeCardContainerProps>('LRNativeCardContainer');
-export const RNNativeStackView = req<NativeStackViewProps>('LRNativeStackView');
-export const RNNativeMenuButton = req<NativeMenuButtonProps>('LRNativeMenuButton');
+export const RNNativeMaterialView = createNativeComponent<NativeMaterialViewProps>('LRNativeMaterialView');
+export const RNNativeButton = createNativeComponent<NativeButtonProps>('LRNativeButton');
+export const RNNativeSwitch = createNativeComponent<NativeSwitchProps>('LRNativeSwitch');
+export const RNNativeSegmentedControl = createNativeComponent<NativeSegmentedControlProps>('LRNativeSegmentedControl');
+export const RNNativeSearchBar = createNativeComponent<NativeSearchBarProps>('LRNativeSearchBar');
+export const RNNativeNavigationBar = createNativeComponent<NativeNavigationBarProps>('LRNativeNavigationBar');
+export const RNNativeToolbar = createNativeComponent<NativeToolbarProps>('LRNativeToolbar');
+export const RNNativeToolbarButton = createNativeComponent<NativeToolbarButtonProps>('LRNativeToolbarButton');
+export const RNNativeToolbarMenu = createNativeComponent<NativeToolbarMenuProps>('LRNativeToolbarMenu');
+export const RNNativeTabBar = createNativeComponent<NativeTabBarProps>('LRNativeTabBar');
+export const RNNativeGroupedContainer = createNativeComponent<NativeGroupedContainerProps>('LRNativeGroupedContainer');
+export const RNNativeCardContainer = createNativeComponent<NativeCardContainerProps>('LRNativeCardContainer');
+export const RNNativeStackView = createNativeComponent<NativeStackViewProps>('LRNativeStackView');
+export const RNNativeMenuButton = createNativeComponent<NativeMenuButtonProps>('LRNativeMenuButton');
