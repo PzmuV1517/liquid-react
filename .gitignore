@@ -5,6 +5,7 @@ lib/
 
 # Ignore node moudules
 node_modules/
+.package-lock.json
 
 # MacOS
 .DS_Store

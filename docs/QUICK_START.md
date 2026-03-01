@@ -47,7 +47,7 @@ import { NativeMaterialView, NativeButton } from 'liquid-react';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <NativeMaterialView
+      <NativeMaterialView 
         material="systemUltraThinMaterial"
         style={styles.material}
       >
@@ -55,7 +55,7 @@ export default function App() {
         <Text style={styles.subtitle}>
           Native iOS components in React Native
         </Text>
-
+        
         <NativeButton
           title="Get Started"
           buttonStyle="filled"
@@ -121,7 +121,7 @@ function SettingsForm() {
         value={enabled}
         onValueChange={(e) => setEnabled(e.nativeEvent.value)}
       />
-
+      
       <NativeSegmentedControl
         segments={['Light', 'Dark', 'Auto']}
         selectedIndex={theme}
@@ -144,8 +144,8 @@ function SearchScreen() {
     <NativeSearchBar
       placeholder="Search..."
       text={query}
-      onTextChanged={(e) => setQuery(e.nativeEvent.text)}
-      onSearchPressed={(e) => performSearch(e.nativeEvent.text)}
+      onChangeText={(e) => setQuery(e.nativeEvent.text)}
+      onSearchPress={(e) => performSearch(e.nativeEvent.text)}
     />
   );
 }
@@ -233,12 +233,9 @@ import { NativeMaterialView } from 'liquid-react';
 
 function MyComponent() {
   if (Platform.OS !== 'ios') {
-    <View style={styles.fallback}>
-      <Text>Liquid-React is iOS-only</Text>
-    </View>;
-    return 0;
+    return <View style={styles.fallback} />;
   }
-
+  
   return <NativeMaterialView material="systemMaterial" />;
 }
 ```
@@ -250,9 +247,9 @@ Or use React Native's platform-specific files:
 
 ## App Store Compliance
 
-✅ Liquid-React uses only public APIs
-✅ Safe for App Store submission
-✅ No private frameworks or hacks
+✅ Liquid-React uses only public APIs  
+✅ Safe for App Store submission  
+✅ No private frameworks or hacks  
 
 See [App Store Compliance](./APP_STORE_COMPLIANCE.md) for details.
 
