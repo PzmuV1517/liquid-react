@@ -1,7 +1,7 @@
 {
   "name": "liquid-react",
   "version": "1.0.0",
-  "description": "Production-ready React Native iOS module exposing Apple's native UIKit Liquid Glass components",
+  "description": "React Native iOS module exposing Apple's native UIKit Liquid Glass components",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -23,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PzmuV1517/liquid-react.git"
+    "url": "git+https://github.com/PzmuV1517/liquid-react.git"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
