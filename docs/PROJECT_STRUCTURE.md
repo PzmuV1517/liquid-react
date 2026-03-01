@@ -1,57 +1,55 @@
 # Project Structure
 
-Complete file structure of the Liquid-React module.
-
 ```
 liquid-react/
 │
-├── 📦 Package Configuration
-│   ├── package.json                 # NPM package configuration
-│   ├── tsconfig.json                # TypeScript configuration
-│   ├── liquid-react.podspec         # CocoaPods specification
-│   ├── .gitignore                   # Git ignore rules
-│   ├── .prettierrc                  # Code formatting rules
-│   └── .prettierignore              # Prettier ignore rules
+├── Package configuration
+│   ├── package.json                 # NPM package
+│   ├── tsconfig.json                # TypeScript config
+│   ├── liquid-react.podspec         # CocoaPods spec
+│   ├── .gitignore
+│   ├── .prettierrc
+│   └── .prettierignore
 │
-├── 📄 Documentation
-│   ├── README.md                    # Main project documentation
-│   ├── LICENSE                      # MIT license
-│   ├── CONTRIBUTING.md              # Contribution guidelines
+├── Documentation
+│   ├── README.md
+│   ├── LICENSE
+│   ├── CONTRIBUTING.md
 │   └── docs/
-│       ├── README.md                # Documentation index
-│       ├── EXAMPLES.md              # Usage examples
-│       ├── API_REFERENCE.md         # Complete API documentation
-│       ├── ARCHITECTURE.md          # Technical architecture
-│       ├── APP_STORE_COMPLIANCE.md  # Legal compliance notes
-│       └── COMPONENT_MAPPING.md     # UIKit mapping reference
+│       ├── README.md
+│       ├── EXAMPLES.md
+│       ├── API_REFERENCE.md
+│       ├── ARCHITECTURE.md
+│       ├── APP_STORE_COMPLIANCE.md
+│       └── COMPONENT_MAPPING.md
 │
-├── 📱 JavaScript/TypeScript Layer
-│   ├── index.js                     # Main entry point (re-exports from src/)
+├── JavaScript/TypeScript
+│   ├── index.js                     # Entry point
 │   └── src/
-│       ├── index.ts                 # Main exports
-│       ├── types.ts                 # TypeScript type definitions
+│       ├── index.ts                 # Exports
+│       ├── types.ts                 # Type definitions
 │       ├── nativeComponents.ts      # Native component registration
 │       └── components.tsx           # React component wrappers
 │
-└── 🍎 Native iOS Layer
+└── Native iOS
     └── ios/
-        ├── LiquidReact-Bridging-Header.h             # Objective-C bridge
+        ├── LiquidReact-Bridging-Header.h
         │
-        ├── 🌫️  Materials & Containers
-        ├── LRNativeMaterialViewManager.swift         # UIVisualEffectView wrapper
-        ├── LRNativeGroupedContainerManager.swift     # Grouped background container
-        └── LRNativeCardContainerManager.swift        # Card container
+        ├── Materials & containers
+        ├── LRNativeMaterialViewManager.swift
+        ├── LRNativeGroupedContainerManager.swift
+        └── LRNativeCardContainerManager.swift
         │
-        ├── 🎛️  Controls
-        ├── LRNativeButtonManager.swift               # UIButton wrapper
-        ├── LRNativeSwitchManager.swift               # UISwitch wrapper
-        ├── LRNativeSegmentedControlManager.swift     # UISegmentedControl wrapper
-        └── LRNativeSearchBarManager.swift            # UISearchBar wrapper
+        ├── Controls
+        ├── LRNativeButtonManager.swift
+        ├── LRNativeSwitchManager.swift
+        ├── LRNativeSegmentedControlManager.swift
+        └── LRNativeSearchBarManager.swift
         │
-        └── 🧭 Navigation
-            ├── LRNativeNavigationBarManager.swift    # UINavigationBar wrapper
-            ├── LRNativeToolbarManager.swift          # UIToolbar wrapper
-            └── LRNativeTabBarManager.swift           # UITabBar wrapper
+        └── Navigation
+            ├── LRNativeNavigationBarManager.swift
+            ├── LRNativeToolbarManager.swift
+            └── LRNativeTabBarManager.swift
 ```
 
 ## File Descriptions

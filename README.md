@@ -1,323 +1,269 @@
-# Liquid-React
+# liquid-react
 
-**Production-ready React Native iOS module exposing Apple's native UIKit Liquid Glass components**
+Probably the only React Native library where every component is literally what iOS ships inside its own apps. `UIButton`, `UISwitch`, `UIToolbar`, `UITabBar` — actual UIKit, running through a thin bridge. We didn't simulate anything, we didn't approximate anything. iOS draws the UI. We just exposed the controls.
 
-## Introduction
+iOS 13+ to run it at all. iOS 26+ if you want the Liquid Glass look. iOS only, full stop.
 
-**What is Liquid-React?**
-
-Liquid-React is a React Native iOS-only module that provides direct access to Apple's native UIKit components, rendered using the same Liquid Glass pipeline Apple uses in its own apps. This is **not** a simulation or recreation—it's a thin declarative bridge to real UIKit views.
-
-> ⚠️ **WARNING:** The NativeMaterialView component is currently broken. React Native children do not render correctly inside it. Do not use NativeMaterialView until this issue is resolved.
-
-**Why choose Liquid-React?**
-
-- ✅ **Real Native UIKit** - Uses `UIVisualEffectView`, `UIButton`, `UINavigationBar`, etc.
-- ✅ **Public APIs Only** - 100% App Store safe
-- ✅ **True Liquid Glass** - Unlike other “liquid glass” libraries that rely on blur effects or shader-based imitations, LiquidReact renders *real, native* iOS Liquid Glass components. The components are implemented using UIKit and participate directly in the system’s material compositing pipeline. **All visual rendering is handled by iOS itself**, ensuring authentic appearance, behavior, and performance **consistent with Apple’s native UI.**
-- ✅ **Zero Custom Rendering** - No Skia, no Metal, no shaders
-- ✅ **iOS Minimum Version:** 13.0
-- ✅ **iOS Minimum Version for Liquid Glass:** iOS 26.0+ (iOS 13-18 will render in different styles based on the iOS version, but all are still real, native system materials)
-- ✅ **Swift 5.0**
+Fair warning right up front: `NativeMaterialView` doesn't work as a container. The blur renders, but children placed inside it won't show up. Known issue, being worked on. For now, treat it as a visual backdrop only, not a wrapper.
 
 ## Installation
 
 ```bash
 npm install liquid-react
-# or
-yarn add liquid-react
-```
-
-### iOS Setup
-
-```bash
 cd ios && pod install
 ```
 
-## Usage
+Rebuild your app after that. That's it.
 
-### Basic Material View
+## Components
 
-```jsx
-import { NativeMaterialView, NativeButton } from 'liquid-react';
+### NativeButton
 
-function App() {
-  return (
-    <NativeMaterialView 
-      material="systemUltraThinMaterial"
-      style={{ flex: 1, padding: 20 }}
-    >
-      <NativeButton 
-        title="Continue" 
-        buttonStyle="filled"
-        onPress={() => console.log('Pressed')}
-      />
-    </NativeMaterialView>
-  );
-}
+```tsx
+import { NativeButton } from 'liquid-react';
+
+<NativeButton
+  title="Continue"
+  buttonStyle="filled"
+  onPress={() => console.log('pressed')}
+  style={{ width: '100%' }}
+/>
 ```
 
-### Native Controls
+`buttonStyle` options: `filled`, `gray`, `tinted`, `plain`, `bordered`, `borderedTinted`, `borderedProminent`.
 
-```jsx
-import { 
-  NativeSwitch, 
-  NativeSegmentedControl,
-  NativeSearchBar 
-} from 'liquid-react';
+Default height: 44.
 
-function ControlsExample() {
-  const [enabled, setEnabled] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [searchText, setSearchText] = useState('');
+---
 
-  return (
-    <>
-      <NativeSwitch 
-        value={enabled}
-        onValueChange={(e) => setEnabled(e.nativeEvent.value)}
-      />
-      
-      <NativeSegmentedControl
-        segments={['First', 'Second', 'Third']}
-        selectedIndex={selectedIndex}
-        onValueChange={(e) => setSelectedIndex(e.nativeEvent.selectedIndex)}
-      />
-      
-      <NativeSearchBar
-        placeholder="Search..."
-        text={searchText}
-        onChangeText={(e) => setSearchText(e.nativeEvent.text)}
-      />
-    </>
-  );
-}
+### NativeSwitch
+
+```tsx
+import { NativeSwitch } from 'liquid-react';
+
+const [on, setOn] = useState(false);
+
+<NativeSwitch
+  value={on}
+  onValueChange={(e) => setOn(e.nativeEvent.value)}
+/>
 ```
 
-### Navigation and Toolbars
+It's a UISwitch. Works like one.
 
-```jsx
-import { 
-  NativeNavigationBar,
-  NativeToolbar,
-  NativeTabBar 
-} from 'liquid-react';
+### NativeSegmentedControl
 
-function NavigationExample() {
-  return (
-    <>
-      <NativeNavigationBar 
-        title="My App"
-        translucent={true}
-        style={{ width: '100%' }}
-      />
-      
-      <NativeToolbar
-        items={[
-          { systemItem: 'add' },
-          { systemItem: 'flexibleSpace' },
-          { title: 'Custom' },
-          { systemItem: 'flexibleSpace' },
-          { systemItem: 'done' }
-        ]}
-        translucent={true}
-      />
-      
-      <NativeTabBar
-        items={[
-          { title: 'Home', icon: 'house' },
-          { title: 'Search', icon: 'magnifyingglass' },
-          { title: 'Profile', icon: 'person' }
-        ]}
-        selectedIndex={0}
-        onTabPress={(e) => console.log(e.nativeEvent.index)}
-      />
-    </>
-  );
-}
+```tsx
+import { NativeSegmentedControl } from 'liquid-react';
+
+const [tab, setTab] = useState(0);
+
+<NativeSegmentedControl
+  segments={['Day', 'Week', 'Month']}
+  selectedIndex={tab}
+  onValueChange={(e) => setTab(e.nativeEvent.selectedIndex)}
+  style={{ width: '100%' }}
+/>
 ```
 
-### Containers
+Quick note on this one: the selection highlight appears while you're pressing but disappears when you release. The control itself is totally functional. Selection state and events fire correctly. The visual material just doesn't settle right inside a bridged view. UIKit limitation. More detail at the bottom of this file if you're curious.
 
-```jsx
-import { 
-  NativeGroupedContainer,
-  NativeCardContainer 
-} from 'liquid-react';
+Default height: 32.
 
-function ContainerExample() {
-  return (
-    <NativeGroupedContainer insetGrouped={true}>
-      <NativeCardContainer cornerRadius={12}>
-        <Text>Card Content</Text>
-      </NativeCardContainer>
-    </NativeGroupedContainer>
-  );
-}
+---
+
+### NativeSearchBar
+
+```tsx
+import { NativeSearchBar } from 'liquid-react';
+
+const [query, setQuery] = useState('');
+
+<NativeSearchBar
+  placeholder="Search..."
+  text={query}
+  onTextChanged={(e) => setQuery(e.nativeEvent.text)}
+  onSearchPressed={(e) => runSearch(e.nativeEvent.text)}
+  onCancelPressed={() => setQuery('')}
+  style={{ width: '100%' }}
+/>
 ```
 
-### Tab Bar Usage
+The prop names don't follow the standard React Native text input convention. It's `onTextChanged`, `onSearchPressed`, `onCancelPressed` — not `onChange` or `onChangeText`. Easy thing to get wrong the first time.
 
-> **Note:** You must set the height of the tab bar using the `style` prop. The `barHeight` prop is only for internal native sizing and does not affect the outer view. Example usage:
+Default height: 56.
 
-```jsx
+---
+
+### NativeNavigationBar
+
+```tsx
+import { NativeNavigationBar } from 'liquid-react';
+
+<NativeNavigationBar
+  title="Settings"
+  translucent={true}
+  style={{ width: '100%' }}
+/>
+```
+
+Default height: 44.
+
+### NativeToolbar
+
+This one works differently from what you might expect. No `items` array prop. You nest `NativeToolbarButton` and `NativeToolbarMenu` as children directly inside the toolbar.
+
+```tsx
+import { NativeToolbar, NativeToolbarButton, NativeToolbarMenu } from 'liquid-react';
+
+<NativeToolbar translucent={true} style={{ width: '100%' }}>
+  <NativeToolbarButton systemItem="add" onPress={handleAdd} />
+  <NativeToolbarButton systemItem="flexibleSpace" />
+  <NativeToolbarMenu
+    icon="ellipsis.circle"
+    menuItems={[
+      { id: 'share', title: 'Share', icon: 'square.and.arrow.up' },
+      { id: 'delete', title: 'Delete', icon: 'trash', destructive: true },
+    ]}
+    onMenuAction={(e) => handleAction(e.nativeEvent.id)}
+  />
+</NativeToolbar>
+```
+
+`systemItem` values include: `add`, `done`, `cancel`, `edit`, `save`, `flexibleSpace`, `fixedSpace`, `compose`, `reply`, `trash`, `undo`, `redo`, `close`, and a few more. Full list in the [API reference](docs/API_REFERENCE.md).
+
+Default height: 44.
+
+---
+
+### NativeTabBar
+
+```tsx
+import { NativeTabBar } from 'liquid-react';
+
+const [tab, setTab] = useState(0);
+
 <NativeTabBar
   items={[
     { title: 'Home', icon: 'house' },
     { title: 'Search', icon: 'magnifyingglass' },
-    { title: 'Settings', icon: 'gearshape' },
+    { title: 'Profile', icon: 'person.crop.circle' },
   ]}
-  selectedIndex={selectedTab}
-  onTabPress={(e) => setSelectedTab(e.nativeEvent.index)}
+  selectedIndex={tab}
+  onTabPress={(e) => setTab(e.nativeEvent.index)}
   translucent={true}
-  style={{ ...styles.tabBar, height: 95 }}
+  style={{ position: 'absolute', bottom: 0, width: '100%', height: 83 }}
 />
 ```
 
-- Always set the desired height in the style prop for NativeTabBar.
-- The tab bar will not resize automatically based on content; you must specify the height you want.
+You have to give this one an explicit height in `style`. It won't size itself. On a normal iPhone with a home indicator, 83 to 95 works for most layouts, but that depends on your app.
 
-## Available Components
+---
 
-### Materials & Containers
-- `NativeMaterialView` → `UIVisualEffectView`
-- `NativeGroupedContainer` → `UIView` + system background
-- `NativeCardContainer` → `UIView` with continuous corners
+### NativeMenuButton
 
-### Navigation & Structure
-- `NativeNavigationBar` → `UINavigationBar`
-- `NativeToolbar` → `UIToolbar`
-- `NativeTabBar` → `UITabBar`
+Standalone context menu button. Same idea as `NativeToolbarMenu` but lives anywhere in your layout, not just inside a toolbar.
 
-### Controls
-- `NativeButton` → `UIButton`
-- `NativeSwitch` → `UISwitch`
-- `NativeSegmentedControl` → `UISegmentedControl`
-- `NativeSearchBar` → `UISearchBar`
+```tsx
+import { NativeMenuButton } from 'liquid-react';
 
-## Material Types
-
-All UIKit system materials are supported:
-
-```typescript
-type MaterialType =
-  | 'systemUltraThinMaterial'
-  | 'systemThinMaterial'
-  | 'systemMaterial'
-  | 'systemThickMaterial'
-  | 'systemChromeMaterial'
-  | 'systemUltraThinMaterialLight'
-  | 'systemThinMaterialLight'
-  | 'systemMaterialLight'
-  | 'systemThickMaterialLight'
-  | 'systemChromeMaterialLight'
-  | 'systemUltraThinMaterialDark'
-  | 'systemThinMaterialDark'
-  | 'systemMaterialDark'
-  | 'systemThickMaterialDark'
-  | 'systemChromeMaterialDark';
+<NativeMenuButton
+  icon="ellipsis.circle"
+  menuItems={[
+    { id: 'edit', title: 'Edit', icon: 'pencil' },
+    { id: 'delete', title: 'Delete', icon: 'trash', destructive: true },
+  ]}
+  onMenuAction={(e) => handleAction(e.nativeEvent.id)}
+  style={{ width: 44, height: 44 }}
+/>
 ```
 
-## Button Styles
+---
 
-```typescript
-type ButtonStyle =
-  | 'filled'      // Default filled button
-  | 'gray'        // Gray background
-  | 'tinted'      // Tinted background
-  | 'plain'       // Plain text
-  | 'bordered'    // Bordered outline
-  | 'borderedTinted'     // Tinted border
-  | 'borderedProminent'; // Prominent border
+### NativeGroupedContainer / NativeCardContainer
+
+```tsx
+import { NativeGroupedContainer, NativeCardContainer } from 'liquid-react';
+
+<NativeGroupedContainer insetGrouped={true} style={{ flex: 1 }}>
+  <NativeCardContainer cornerRadius={10} style={{ margin: 16, padding: 16 }}>
+    <Text>Card content</Text>
+  </NativeCardContainer>
+</NativeGroupedContainer>
 ```
 
-## Explicit Non-Goals
+`NativeGroupedContainer` sets `systemGroupedBackground`. `NativeCardContainer` goes inside it with `secondarySystemGroupedBackground` and a continuous corner radius. If you've built an iOS settings screen before, this is exactly that look.
 
-❌ Cross-platform support (iOS only)  
-❌ Custom blur intensity  
-❌ Private API usage  
-❌ SwiftUI components  
-❌ Custom animations  
-❌ Pixel-perfect Control Center imitation  
+---
 
-## Known Limitations
+### NativeStackView
 
-1. **iOS renders everything** - Visual behavior varies across iOS versions
-2. **Frame-based layout** - No Auto Layout (React Native uses frame layout)
-3. **No Auto Layout constraints** - Parent must provide frame
-4. **System-controlled colors** - Appearance changes with iOS theme
-5. **No custom materials** - Only Apple's predefined materials
+Wraps `UIStackView`. Good for laying out a few native components without needing to fight flexbox.
 
-## App Store Compliance
+```tsx
+import { NativeStackView, NativeButton } from 'liquid-react';
 
-✅ Uses only public APIs  
-✅ No private frameworks  
-✅ No runtime injection  
-✅ No reverse-engineered behaviors  
-✅ Safe for App Store submission  
+<NativeStackView axis="vertical" spacing={8} alignment="fill" style={{ width: '100%' }}>
+  <NativeButton title="Primary" buttonStyle="filled" onPress={save} />
+  <NativeButton title="Cancel" buttonStyle="plain" onPress={cancel} />
+</NativeStackView>
+```
+
+`axis`: `vertical` or `horizontal`. `alignment`: `fill`, `leading`, `trailing`, `center`, `firstBaseline`, `lastBaseline`. `distribution`: `fill`, `fillEqually`, `fillProportionally`, `equalSpacing`, `equalCentering`.
+
+---
+
+### NativeMaterialView
+
+Wraps `UIVisualEffectView` with system blur materials.
+
+```tsx
+import { NativeMaterialView } from 'liquid-react';
+
+<NativeMaterialView
+  material="systemUltraThinMaterial"
+  style={{ width: '100%', height: 200, borderRadius: 16 }}
+/>
+```
+
+> **Broken:** React Native children don't render inside this component right now. The blur itself is visible, but child views aren't. Don't use it as a container until this is fixed.
+
+Material options (lightest to heaviest): `systemUltraThinMaterial`, `systemThinMaterial`, `systemMaterial`, `systemThickMaterial`, `systemChromeMaterial`. Each has `Light` and `Dark` suffixed variants that lock to that appearance.
+
+---
+
+## Cross-version behavior
+
+iOS 13 through 25 renders things whatever way that iOS version normally renders UIKit controls. iOS 26+ gives you Liquid Glass. Nothing gets polyfilled or faked across any version. The library just calls UIKit and UIKit does whatever it does on that version.
+
+## What this library doesn't do
+
+iOS only. No Android, no web, no plans for either. Blur intensity isn't something you can configure because Apple doesn't expose that as a public API. No SwiftUI. No private APIs.
+
+Everything is App Store safe.
+
+## Documentation
+
+Full prop reference, type definitions, and more examples in [docs/](./docs/).
+
+## Contributing
+
+We try to keep up with new components Apple releases, but we're students so it doesn't always happen fast. If you want to add something or fix a bug, check [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
 MIT
 
-## Documentation
+---
 
-See [docs/](./docs/) for detailed architecture and API reference.
-Make sure the component you are using supports the props you are passing, and refer to the documentation for more details on available props and their usage.
+## About the NativeSegmentedControl visual bug
 
-## Contributing
-We welcome contributions to Liquid-React! We try to regularly update the library with new components Apple releases, but because we are also students, we might not always be able to keep up with the pace of Apple's updates. If you want to contribute, please check out our [contributing guidelines](CONTRIBUTING.md) for more information on how to get started.
+The component itself is correct. Selection works, `selectedIndex` updates, events fire. The issue is purely visual: the Liquid Glass selection highlight appears while you're pressing and then vanishes when you lift your finger.
+
+Why it happens: UIKit requires a specific set of conditions to resolve the material environment on a segmented control. No custom styling (no `backgroundColor`, `tintColor`, or `selectedSegmentTintColor`). Segments added before `selectedSegmentIndex` is ever touched. Layout forced after selection and frame changes. And a real `UIVisualEffectView` ancestor with a settled frame already in place. Getting all of that in sync through a React Native bridge, where layout and prop updates come through asynchronously, just isn't something we've been able to crack yet.
+
+Not React Native's fault. Not a bug here. Just a UIKit constraint with no clean workaround we've found.
 
 ## Notes
+
 They said it can't be done. We proved them wrong.
-
----
-
-## ⚠️ UISegmentedControl “Liquid Glass” Rendering Bug
-
-**Summary:**
-UISegmentedControl is functionally correct, but its native material (Liquid Glass) selection rendering is unstable when embedded in a React Native–bridged custom view. The highlight only appears during press/drag and disappears on release because UIKit cannot resolve the control’s material environment and settled appearance state.
-
-**Root Cause:**
-UIKit requires:
-- No custom styling (backgroundColor, tintColor, selectedSegmentTintColor must be nil)
-- Segments must be added before setting selectedSegmentIndex
-- Layout must be forced after selection and frame changes
-- The control must be inside a real material ancestor (UIVisualEffectView)
-- Frame must be stable before selection settles
-
-**Minimal Correct Implementation:**
-```swift
-final class NativeSegmentedControlView: UIView {
-  private let materialView = UIVisualEffectView(
-    effect: UIBlurEffect(style: .systemMaterial)
-  )
-  private let segmentedControl = UISegmentedControl()
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    addSubview(materialView)
-    materialView.contentView.addSubview(segmentedControl)
-  }
-  required init?(coder: NSCoder) { fatalError() }
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    materialView.frame = bounds
-    segmentedControl.frame = bounds.insetBy(dx: 4, dy: 4)
-    segmentedControl.setNeedsLayout()
-    segmentedControl.layoutIfNeeded()
-  }
-}
-```
-
-**What NOT to Do:**
-- Do not style the control
-- Do not override draw methods
-- Do not use Auto Layout
-- Do not set clear backgrounds
-- Do not simulate glass
-- Do not rely on JS animations
-
-**Notice:**
-This is not a React Native or liquid-react bug. It is a UIKit limitation. Controls with material rendering must be managed according to Apple’s requirements for full visual fidelity.
-
----

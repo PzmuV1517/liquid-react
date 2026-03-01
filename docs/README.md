@@ -1,32 +1,22 @@
-# Liquid-React Documentation
+# Documentation
 
-Complete documentation for the Liquid-React native iOS module.
+## Where to start
 
-## Quick Start
+- [Quick Start](./QUICK_START.md)
+- [Main README](../README.md)
+- [Examples](./EXAMPLES.md)
 
-- **[Quick Start Guide](./QUICK_START.md)** - Get started in 5 minutes
-- **[Main README](../README.md)** - Installation and basic usage
-- **[Examples](./EXAMPLES.md)** - Complete code examples
+## Reference
 
-## Technical Documentation
-
-- **[API Reference](./API_REFERENCE.md)** - Complete API documentation for all components
-- **[Architecture](./ARCHITECTURE.md)** - Technical architecture and implementation details
-- **[Component Mapping](./COMPONENT_MAPPING.md)** - Complete UIKit mapping table
-- **[Project Structure](./PROJECT_STRUCTURE.md)** - File structure and organization
-- **[App Store Compliance](./APP_STORE_COMPLIANCE.md)** - Legal compliance and public API verification
+- [API Reference](./API_REFERENCE.md)
+- [Architecture](./ARCHITECTURE.md)
+- [Component Mapping](./COMPONENT_MAPPING.md)
+- [Project Structure](./PROJECT_STRUCTURE.md)
+- [App Store Compliance](./APP_STORE_COMPLIANCE.md)
 
 ## Overview
 
-Liquid-React is a production-ready React Native iOS module that exposes Apple's native UIKit components using only public APIs. It provides authentic "Liquid Glass" rendering by delegating all visual decisions to iOS.
-
-### Key Principles
-
-1. **Public APIs Only** - 100% App Store safe
-2. **Real Native UIKit** - No simulation or recreation
-3. **iOS Controls Everything** - Blur, vibrancy, depth controlled by Apple
-4. **Frame-Based Layout** - Compatible with React Native
-5. **Minimal Bridge Traffic** - Efficient native integration
+React Native iOS bindings for real UIKit components. iOS handles all rendering. The library is a thin bridge, not a UI framework. Everything uses public Apple APIs, so it's safe for App Store submission.
 
 ## Component Guide
 
