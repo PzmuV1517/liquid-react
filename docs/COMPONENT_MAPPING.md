@@ -12,14 +12,10 @@ This table documents the **exact 1:1 mapping** between Liquid-React components a
 | `NativeSegmentedControl` | `LRNativeSegmentedControlManager` | `UISegmentedControl` | Segmented picker control |
 | `NativeSearchBar` | `LRNativeSearchBarManager` | `UISearchBar` | Search input with cancel button |
 | `NativeNavigationBar` | `LRNativeNavigationBarManager` | `UINavigationBar` | Top navigation bar |
-| `NativeToolbar` | `LRNativeToolbarManager` | `UIToolbar` | Bottom toolbar — accepts `NativeToolbarButton`/`NativeToolbarMenu` as children |
-| `NativeToolbarButton` | `LRNativeToolbarButtonManager` | `UIBarButtonItem` | Bar button item inside a toolbar |
-| `NativeToolbarMenu` | `LRNativeToolbarMenuManager` | `UIBarButtonItem` + `UIMenu` | Bar button with dropdown menu |
+| `NativeToolbar` | `LRNativeToolbarManager` | `UIToolbar` | Bottom toolbar with bar button items |
 | `NativeTabBar` | `LRNativeTabBarManager` | `UITabBar` | Tab navigation bar |
 | `NativeGroupedContainer` | `LRNativeGroupedContainerManager` | `UIView` | Container with system grouped background |
 | `NativeCardContainer` | `LRNativeCardContainerManager` | `UIView` | Card with continuous corner radius |
-| `NativeStackView` | `LRNativeStackViewManager` | `UIStackView` | Axis-based layout container |
-| `NativeMenuButton` | `LRNativeMenuButtonManager` | `UIButton` + `UIMenu` | Standalone button with dropdown menu |
 
 ## Implementation Patterns
 
@@ -163,9 +159,9 @@ class NativeNavigationBar: UIView {
 |-----------|---------------|-----------|
 | `placeholder` | `placeholder: NSString` | `UISearchBar.placeholder` |
 | `text` | `text: NSString` | `UISearchBar.text` |
-| `onTextChanged` | `onTextChanged: RCTDirectEventBlock` | `UISearchBarDelegate.textDidChange` |
-| `onSearchPressed` | `onSearchPressed: RCTDirectEventBlock` | `UISearchBarDelegate.searchButtonClicked` |
-| `onCancelPressed` | `onCancelPressed: RCTDirectEventBlock` | `UISearchBarDelegate.cancelButtonClicked` |
+| `onChangeText` | `onChangeText: RCTBubblingEventBlock` | `UISearchBarDelegate.textDidChange` |
+| `onSearchPress` | `onSearchPress: RCTBubblingEventBlock` | `UISearchBarDelegate.searchButtonClicked` |
+| `onCancelPress` | `onCancelPress: RCTBubblingEventBlock` | `UISearchBarDelegate.cancelButtonClicked` |
 
 ## Public API Verification
 

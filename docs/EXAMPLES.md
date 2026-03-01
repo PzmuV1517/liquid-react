@@ -1,6 +1,6 @@
 # Examples
 
-This page contains comprehensive examples of using Liquid-React components.
+This directory contains comprehensive examples of using Liquid-React components.
 
 ## Complete App Example
 
@@ -15,7 +15,6 @@ import {
   NativeSearchBar,
   NativeNavigationBar,
   NativeToolbar,
-  NativeToolbarButton,
   NativeTabBar,
   NativeGroupedContainer,
   NativeCardContainer,
@@ -89,8 +88,8 @@ export default function App() {
           <NativeSearchBar
             placeholder="Search..."
             text={searchText}
-            onTextChanged={(e) => setSearchText(e.nativeEvent.text)}
-            onSearchPressed={(e) => console.log('Search:', e.nativeEvent.text)}
+            onChangeText={(e) => setSearchText(e.nativeEvent.text)}
+            onSearchPress={(e) => console.log('Search:', e.nativeEvent.text)}
             style={styles.searchBar}
           />
         </NativeGroupedContainer>
@@ -168,13 +167,17 @@ export default function App() {
       </ScrollView>
 
       {/* Toolbar */}
-      <NativeToolbar translucent={true} style={styles.toolbar}>
-        <NativeToolbarButton systemItem="add" onPress={() => {}} />
-        <NativeToolbarButton systemItem="flexibleSpace" />
-        <NativeToolbarButton title="Custom" onPress={() => {}} />
-        <NativeToolbarButton systemItem="flexibleSpace" />
-        <NativeToolbarButton systemItem="done" onPress={() => {}} />
-      </NativeToolbar>
+      <NativeToolbar
+        items={[
+          { systemItem: 'add' },
+          { systemItem: 'flexibleSpace' },
+          { title: 'Custom' },
+          { systemItem: 'flexibleSpace' },
+          { systemItem: 'done' },
+        ]}
+        translucent={true}
+        style={styles.toolbar}
+      />
 
       {/* Tab Bar */}
       <NativeTabBar

@@ -4,8 +4,6 @@ Complete file structure of the Liquid-React module.
 
 ```
 liquid-react/
-|
-├── .github/                 # GitHub configuration files
 │
 ├── 📦 Package Configuration
 │   ├── package.json                 # NPM package configuration
