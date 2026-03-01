@@ -1,13 +1,10 @@
 # App Store Compliance
 
-## Legal Status: SAFE FOR APP STORE SUBMISSION
+Everything in this library uses public UIKit APIs documented by Apple. No private frameworks, no undocumented methods, no runtime injection, no swizzling. You can ship apps built with this library to the App Store without any compliance concerns.
 
-Liquid-React uses **only public Apple APIs** and is fully compliant with App Store guidelines.
+## UIKit classes used
 
-## Public APIs Used
-
-### UIKit Framework (Public)
-All components use standard, documented UIKit classes:
+Every component in this library maps to a standard, publicly documented UIKit class:
 
 `UIVisualEffectView` - System blur effects  
 `UIBlurEffect` - Blur styles  
@@ -20,14 +17,9 @@ All components use standard, documented UIKit classes:
 `UITabBar` - Tab bar  
 `UIView` - Base views  
 
-### No Private APIs
-No private frameworks  
-No undocumented methods  
-No runtime injection  
-No method swizzling  
-No reverse-engineered behaviors  
-No class-dump usage  
-No private header imports  
+### What we don't do
+
+No private frameworks, undocumented methods, runtime injection, method swizzling, reverse-engineered behavior, class-dump usage, or private header imports.
 
 ## Apple Developer Documentation References
 
@@ -43,23 +35,13 @@ All APIs are documented in official Apple documentation:
 - [UIToolbar](https://developer.apple.com/documentation/uikit/uitoolbar)
 - [UITabBar](https://developer.apple.com/documentation/uikit/uitabbar)
 
-## App Store Review Guidelines Compliance
+## Relevant guidelines
 
-### 2.5 Software Requirements
-Uses only public APIs provided by Apple  
-No private frameworks or undocumented features  
-No attempts to alter or disable system features  
+**2.5 Software Requirements** — uses only public Apple APIs, no private frameworks, no attempts to alter system features.
 
-### 4.0 Design
-Follows Apple Human Interface Guidelines  
-Uses native UI components as intended  
-Respects system appearance settings  
+**4.0 Design** — uses native UI components as Apple intended, respects system appearance.
 
-### 5.1 Privacy
-No data collection  
-No analytics or tracking  
-No network requests  
-No access to user data  
+**5.1 Privacy** — no data collection, no analytics, no network requests, no access to user data.
 
 ## Technical Verification
 

@@ -1,16 +1,10 @@
-# Architecture Overview
+# Architecture
 
-## Design Philosophy
+## How it works
 
-Liquid-React is a **thin declarative bridge**, not a UI framework. Apple renders the UI; we simply expose it through React Native.
+The library is a bridge, not a framework. iOS draws everything. We wrote a thin layer of Swift view managers that take props from React Native and pass them to UIKit as-is. There's no custom rendering, no polyfilling, no intermediate drawing layer.
 
-## Core Principles
-
-1. **Delegate to iOS** - All visual rendering decisions made by UIKit
-2. **Public APIs Only** - 100% App Store compliance
-3. **No Simulation** - Real UIVisualEffectView, not custom blur
-4. **Frame-Based Layout** - React Native's layout system (no Auto Layout)
-5. **Minimal Bridge Traffic** - Efficient prop updates
+Three things matter here: use only public APIs, let UIKit own the visual output, and keep bridge traffic as low as practical.
 
 ## Architecture Layers
 
@@ -177,14 +171,7 @@ private func getBlurEffect(for material: String) -> UIBlurEffect {
 }
 ```
 
-### No Custom Tuning
-❌ Cannot adjust blur intensity  
-❌ Cannot customize vibrancy  
-❌ Cannot override tint  
-
-✅ iOS controls all visual properties  
-✅ Adapts to system appearance  
-✅ Respects accessibility settings  
+You can't tune blur intensity, change vibrancy, or override any visual property. iOS owns all of that. The upside is it adapts to system appearance and accessibility settings automatically.
 
 ## Animation Strategy
 
@@ -206,33 +193,11 @@ let animator = UIViewPropertyAnimator(
 animator.startAnimation()
 ```
 
-### What We Don't Do
-❌ JavaScript-driven animations  
-❌ Custom timing curves  
-❌ Manual Core Animation  
-❌ Override UIKit defaults  
+UIKit handles timing, easing, and material transitions natively. We don't drive animations from JavaScript, and we don't override UIKit's default behavior.
 
-## Performance Optimizations
+## Performance
 
-### View Reuse
-```swift
-private var effectView: UIVisualEffectView?
-
-private func updateMaterial() {
-    effectView?.removeFromSuperview() // Reuse or recreate
-    effectView = UIVisualEffectView(effect: blurEffect)
-}
-```
-
-### Minimal Re-renders
-- Props update only when changed
-- Frame calculations in `layoutSubviews()`
-- Cached system effects where possible
-
-### Bridge Efficiency
-- Direct property setters
-- Bubbling events only when needed
-- No unnecessary serialization
+Props update only when they change. Frame calculations happen in `layoutSubviews()`. Cached system effects where possible. Nothing unusual here — it's standard UIKit view management.
 
 ## Threading
 
@@ -271,71 +236,20 @@ npm start -- --reset-cache
 
 ## Testing
 
-### Unit Testing
-Test JavaScript component exports:
-```typescript
-import { NativeMaterialView } from 'liquid-react';
-expect(NativeMaterialView).toBeDefined();
-```
+Test that the TypeScript exports exist and that events fire correctly. Visual snapshot tests don't make sense here since UIKit controls the rendering and the output changes across iOS versions.
 
-### Integration Testing
-Test on real iOS device:
-- Visual inspection
-- Different iOS versions
-- Light/dark mode
-- Accessibility settings
+For anything visual, test on a real device. Simulator is fine for basic checks but some materials render differently on hardware.
 
-### No Snapshot Tests
-Visual appearance controlled by iOS, not deterministic across versions.
+## Adding new components
 
-## Extending the Module
+The pattern is the same for every component:
 
-### Adding New Components
+1. Create a Swift view manager (`LRNativeCustomViewManager`)
+2. Implement the native view class with `@objc` props
+3. Export to Objective-C via the bridging header
+4. Add TypeScript types and register with `requireNativeComponent`
 
-1. **Create Swift View Manager**
-```swift
-@objc(LRNativeCustomViewManager)
-class LRNativeCustomViewManager: RCTViewManager {
-    override func view() -> UIView! {
-        return NativeCustomView()
-    }
-}
-```
-
-2. **Implement Native View**
-```swift
-class NativeCustomView: UIView {
-    // UIKit component integration
-}
-```
-
-3. **Export to Objective-C**
-```objc
-@interface RCT_EXTERN_MODULE(LRNativeCustomViewManager, RCTViewManager)
-RCT_EXPORT_VIEW_PROPERTY(customProp, NSString)
-@end
-```
-
-4. **Create TypeScript Types**
-```typescript
-export interface NativeCustomViewProps extends ViewProps {
-  customProp?: string;
-}
-```
-
-5. **Register Component**
-```typescript
-export const RNNativeCustomView = 
-  requireNativeComponent<NativeCustomViewProps>('LRNativeCustomView');
-```
-
-### Guidelines for New Components
-- ✅ Must use public UIKit API
-- ✅ Must delegate rendering to iOS
-- ✅ Must use frame-based layout
-- ✅ Props must map directly to UIKit properties
-- ❌ No custom drawing
-- ❌ No private APIs
+Only use public UIKit APIs. Props should map directly to UIKit properties — no transformation logic in the bridge. Frame-based layout only (override `layoutSubviews`).
 
 ## Build Configuration
 

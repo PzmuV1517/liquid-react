@@ -1,112 +1,55 @@
-# Quick Start Guide
+# Quick Start
 
-Get started with Liquid-React in 5 minutes.
+## Before you start
 
-## Prerequisites
+You need macOS with Xcode 11+, a React Native project targeting iOS 13+, and CocoaPods. That's it.
 
-- macOS with Xcode 11+
-- React Native 0.65.0+
-- iOS 13.0+ target
-- CocoaPods installed
-
-## Installation
-
-### 1. Install Package
+## Setup
 
 ```bash
 npm install liquid-react
-# or
-yarn add liquid-react
+cd ios && pod install
 ```
 
-### 2. Install iOS Dependencies
+Rebuild your app after that. The native module won't link itself.
 
-```bash
-cd ios
-pod install
-cd ..
-```
+## First component
 
-### 3. Rebuild Your App
-
-```bash
-npm run ios
-```
-
-That's it! You're ready to use native iOS components.
-
-## First Component
-
-Create a simple app with a native material view and button:
+A working starting point using `NativeButton` inside a grouped container:
 
 ```jsx
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { NativeMaterialView, NativeButton } from 'liquid-react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { NativeGroupedContainer, NativeCardContainer, NativeButton } from 'liquid-react';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <NativeMaterialView 
-        material="systemUltraThinMaterial"
-        style={styles.material}
-      >
-        <Text style={styles.title}>Welcome to Liquid React</Text>
-        <Text style={styles.subtitle}>
-          Native iOS components in React Native
-        </Text>
-        
-        <NativeButton
-          title="Get Started"
-          buttonStyle="filled"
-          onPress={() => console.log('Button pressed!')}
-          style={styles.button}
-        />
-      </NativeMaterialView>
+      <NativeGroupedContainer insetGrouped={true} style={{ flex: 1 }}>
+        <NativeCardContainer cornerRadius={12} style={styles.card}>
+          <NativeButton
+            title="Get Started"
+            buttonStyle="filled"
+            onPress={() => console.log('pressed')}
+            style={{ width: '100%' }}
+          />
+        </NativeCardContainer>
+      </NativeGroupedContainer>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f2f2f7',
-  },
-  material: {
-    margin: 20,
-    padding: 24,
-    borderRadius: 16,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#000',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  button: {
-    width: '100%',
-  },
+  container: { flex: 1, backgroundColor: '#f2f2f7' },
+  card: { margin: 16, padding: 16 },
 });
 ```
 
-## Common Patterns
+`NativeMaterialView` looks like a natural wrapper here but children don't render inside it yet. Use `NativeGroupedContainer` or `NativeCardContainer` when you need a native background container.
 
-### Material Background with Content
+## Common patterns
 
-```jsx
-<NativeMaterialView material="systemMaterial">
-  {/* Your content here */}
-</NativeMaterialView>
-```
-
-### Form with Native Controls
+### Form with native controls
 
 ```jsx
 import { NativeSwitch, NativeSegmentedControl } from 'liquid-react';
@@ -132,7 +75,9 @@ function SettingsForm() {
 }
 ```
 
-### Search Interface
+### Search bar
+
+Note the prop names here — they don't follow standard React Native text input conventions:
 
 ```jsx
 import { NativeSearchBar } from 'liquid-react';
@@ -144,37 +89,30 @@ function SearchScreen() {
     <NativeSearchBar
       placeholder="Search..."
       text={query}
-      onChangeText={(e) => setQuery(e.nativeEvent.text)}
-      onSearchPress={(e) => performSearch(e.nativeEvent.text)}
+      onTextChanged={(e) => setQuery(e.nativeEvent.text)}
+      onSearchPressed={(e) => performSearch(e.nativeEvent.text)}
+      onCancelPressed={() => setQuery('')}
+      style={{ width: '100%' }}
     />
   );
 }
 ```
 
-## Material Types
+It's `onTextChanged`, not `onChange` or `onChangeText`.
 
-Try different blur intensities:
+## Material types
 
 ```jsx
-// Lightest
-<NativeMaterialView material="systemUltraThinMaterial" />
-
-// Light
-<NativeMaterialView material="systemThinMaterial" />
-
-// Standard
-<NativeMaterialView material="systemMaterial" />
-
-// Heavy
-<NativeMaterialView material="systemThickMaterial" />
-
-// Heaviest
-<NativeMaterialView material="systemChromeMaterial" />
+<NativeMaterialView material="systemUltraThinMaterial" style={{ height: 100 }} />
+<NativeMaterialView material="systemThinMaterial" style={{ height: 100 }} />
+<NativeMaterialView material="systemMaterial" style={{ height: 100 }} />
+<NativeMaterialView material="systemThickMaterial" style={{ height: 100 }} />
+<NativeMaterialView material="systemChromeMaterial" style={{ height: 100 }} />
 ```
 
-## Button Styles
+Append `Light` or `Dark` to any material name to lock the appearance regardless of system settings.
 
-Experiment with different button styles:
+## Button styles
 
 ```jsx
 <NativeButton title="Filled" buttonStyle="filled" />
@@ -186,26 +124,13 @@ Experiment with different button styles:
 
 ## Troubleshooting
 
-### Module not found
+**Module not found** — run `pod install` again and rebuild.
 
-```bash
-cd ios && pod install
-```
+**Blur not showing** — check that the parent view has a non-zero frame. Also double-check your iOS deployment target is 13+.
 
-### TypeScript errors
+**TypeScript errors** — install `@types/react` and `@types/react-native`.
 
-```bash
-npm install --save-dev @types/react @types/react-native
-```
-
-### Blur not appearing
-
-Make sure:
-- Parent has non-zero size
-- iOS 13.0+ deployment target
-- Running on device or simulator (not just TypeScript checks)
-
-### Build errors
+**Build errors after updating** — clean and reinstall:
 
 ```bash
 cd ios
@@ -215,67 +140,38 @@ cd ..
 npm run ios -- --reset-cache
 ```
 
-## Next Steps
+## iOS version behavior
 
-1. **[Examples](./EXAMPLES.md)** - See complete working examples
-2. **[API Reference](./API_REFERENCE.md)** - Learn all component props
-3. **[Architecture](./ARCHITECTURE.md)** - Understand how it works
+Components render using whatever UIKit does on that iOS version. iOS 13 through 25 uses that version's native look. iOS 26+ gives you Liquid Glass. Nothing gets polyfilled.
 
-## iOS-Only Notice
+## Platform guard
 
-⚠️ Liquid-React is **iOS-only**. Android and web are not supported by design.
-
-To handle platform-specific code:
+This library is iOS only. If your project targets multiple platforms, guard the components:
 
 ```jsx
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { NativeMaterialView } from 'liquid-react';
 
 function MyComponent() {
   if (Platform.OS !== 'ios') {
     return <View style={styles.fallback} />;
   }
-  
-  return <NativeMaterialView material="systemMaterial" />;
+
+  return (
+    <NativeMaterialView
+      material="systemMaterial"
+      style={{ width: '100%', height: 200 }}
+    />
+  );
 }
 ```
 
-Or use React Native's platform-specific files:
-- `MyComponent.ios.tsx` - iOS implementation with Liquid-React
-- `MyComponent.android.tsx` - Android fallback
-- `MyComponent.web.tsx` - Web fallback
+Or use platform-specific file extensions: `MyComponent.ios.tsx`, `MyComponent.android.tsx`.
 
-## App Store Compliance
+## More reading
 
-✅ Liquid-React uses only public APIs  
-✅ Safe for App Store submission  
-✅ No private frameworks or hacks  
+[API Reference](./API_REFERENCE.md) — all component props and types.
 
-See [App Store Compliance](./APP_STORE_COMPLIANCE.md) for details.
+[Examples](./EXAMPLES.md) — complete working screen implementations.
 
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/liquid-react/issues)
-- **Examples**: [docs/EXAMPLES.md](./EXAMPLES.md)
-- **API Docs**: [docs/API_REFERENCE.md](./API_REFERENCE.md)
-
-## What You Get
-
-- ✅ Native UIKit components
-- ✅ Real Liquid Glass rendering
-- ✅ iOS-controlled visuals
-- ✅ System animations
-- ✅ App Store safe
-
-## What You Don't Get
-
-- ❌ Cross-platform support
-- ❌ Custom blur tuning
-- ❌ Pixel-perfect Control Center clone
-- ❌ Private API access
-
-**This is a thin bridge to UIKit, not a UI framework.**
-
----
-
-**Happy building with native iOS components! 🎉**
+[Architecture](./ARCHITECTURE.md) — how the bridge is structured.

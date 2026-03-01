@@ -1,8 +1,8 @@
 # Examples
 
-This directory contains comprehensive examples of using Liquid-React components.
+Working code for common patterns. Copy what you need.
 
-## Complete App Example
+## Complete app example
 
 ```jsx
 import React, { useState } from 'react';
@@ -15,6 +15,7 @@ import {
   NativeSearchBar,
   NativeNavigationBar,
   NativeToolbar,
+  NativeToolbarButton,
   NativeTabBar,
   NativeGroupedContainer,
   NativeCardContainer,
@@ -88,8 +89,8 @@ export default function App() {
           <NativeSearchBar
             placeholder="Search..."
             text={searchText}
-            onChangeText={(e) => setSearchText(e.nativeEvent.text)}
-            onSearchPress={(e) => console.log('Search:', e.nativeEvent.text)}
+            onTextChanged={(e) => setSearchText(e.nativeEvent.text)}
+            onSearchPressed={(e) => console.log('Search:', e.nativeEvent.text)}
             style={styles.searchBar}
           />
         </NativeGroupedContainer>
@@ -167,17 +168,11 @@ export default function App() {
       </ScrollView>
 
       {/* Toolbar */}
-      <NativeToolbar
-        items={[
-          { systemItem: 'add' },
-          { systemItem: 'flexibleSpace' },
-          { title: 'Custom' },
-          { systemItem: 'flexibleSpace' },
-          { systemItem: 'done' },
-        ]}
-        translucent={true}
-        style={styles.toolbar}
-      />
+      <NativeToolbar translucent={true} style={styles.toolbar}>
+        <NativeToolbarButton systemItem="add" onPress={() => {}} />
+        <NativeToolbarButton systemItem="flexibleSpace" />
+        <NativeToolbarButton systemItem="done" onPress={() => {}} />
+      </NativeToolbar>
 
       {/* Tab Bar */}
       <NativeTabBar
@@ -275,25 +270,22 @@ const styles = StyleSheet.create({
 });
 ```
 
-## Minimal Examples
+## Minimal examples
 
-### Material View Only
+### Material view
+
+`NativeMaterialView` renders the blur but doesn't support children right now. Use it as a standalone background element:
 
 ```jsx
 import React from 'react';
-import { View, Text } from 'react-native';
 import { NativeMaterialView } from 'liquid-react';
 
 export default function MinimalMaterialExample() {
   return (
     <NativeMaterialView
       material="systemMaterial"
-      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-    >
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
-        Native Blur Material
-      </Text>
-    </NativeMaterialView>
+      style={{ width: '100%', height: 200, borderRadius: 16 }}
+    />
   );
 }
 ```
@@ -406,18 +398,8 @@ const styles = StyleSheet.create({
 });
 ```
 
-## Testing
+## A few things worth knowing
 
-To test these examples in your React Native project:
+All of these examples are iOS only. The visual appearance is entirely up to UIKit, so things will look different on iOS 26 (Liquid Glass) versus older versions. That's expected behavior, not a rendering bug.
 
-1. Install liquid-react
-2. Copy any example into your App.tsx/App.jsx
-3. Run on iOS device or simulator
-4. Observe native UIKit rendering
-
-## Notes
-
-- All examples use **only** public UIKit APIs
-- Visual appearance controlled entirely by iOS
-- Behavior may vary across iOS versions (this is expected)
-- Examples are iOS-only
+The NativeToolbar imports above require `NativeToolbarButton` and `NativeToolbarMenu` to be imported from `liquid-react` alongside `NativeToolbar`.
