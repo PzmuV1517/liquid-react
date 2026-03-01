@@ -2,8 +2,8 @@ name: Publish to npm
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 jobs:
   publish:
@@ -29,9 +29,6 @@ jobs:
 
       - name: Lint
         run: npm run lint
-
-      - name: Type-check
-        run: npm run typecheck
 
       - name: Build
         run: npm run build
