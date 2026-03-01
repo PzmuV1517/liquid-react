@@ -1,4 +1,3 @@
-import React from 'react';
 import { Platform, requireNativeComponent, View } from 'react-native';
 import type {
   NativeMaterialViewProps,
@@ -18,10 +17,9 @@ import type {
 } from './types';
 
 /**
- * Safely resolves a native component by name.
- * On iOS/Android it delegates to requireNativeComponent.
- * On web (Expo Web / react-native-web) no native modules exist, so
- * we fall back to a plain View to avoid a hard crash at module load time.
+ * Resolves a native component by name.
+ * On web (Expo Web / react-native-web), falls back to a plain View
+ * to avoid a crash at module load time.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createNativeComponent<T>(name: string): React.ComponentType<T> {

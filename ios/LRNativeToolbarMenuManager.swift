@@ -48,8 +48,6 @@ class NativeToolbarMenuContainer: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
-        // Keep the view in the hierarchy (not hidden) so RCTDirectEventBlock
-        // can dispatch events to JS. Make it invisible instead.
         self.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
         self.clipsToBounds = true
         self.alpha = 0
