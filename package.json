@@ -24,6 +24,11 @@
     "type": "git",
     "url": "git+https://github.com/PzmuV1517/liquid-react.git"
   },
+  "react-native": {
+    "ios": {
+      "podspecPath": "./liquid-react.podspec"
+    }
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-native": ">=0.65.0"
