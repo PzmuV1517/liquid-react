@@ -43,17 +43,25 @@ class NativeSwitch: UIView {
             switchControl.isEnabled = !disabled
         }
     }
+
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     
     @objc var onValueChange: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSwitch()
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupSwitch()
+        applyAppearanceMode()
     }
     
     private func setupSwitch() {
@@ -61,6 +69,10 @@ class NativeSwitch: UIView {
         switchControl.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(switchControl)
+    }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
     }
     
     @objc private func handleValueChange() {
@@ -77,6 +89,19 @@ class NativeSwitch: UIView {
             width: switchSize.width,
             height: switchSize.height
         )
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
     
     override var intrinsicContentSize: CGSize {

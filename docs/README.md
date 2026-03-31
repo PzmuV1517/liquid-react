@@ -18,6 +18,8 @@
 
 React Native iOS bindings for real UIKit components. iOS handles all rendering. The library is a thin bridge, not a UI framework. Everything uses public Apple APIs, so it's safe for App Store submission.
 
+Visual components support `appearanceMode` (`auto`, `system`, `light`, `dark`) and can share a global default via `LiquidReactAppearanceProvider`.
+
 ## Component Guide
 
 ### Materials & Containers

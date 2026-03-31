@@ -29,17 +29,25 @@ class NativeButton: UIView {
             updateButton()
         }
     }
+
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     
     @objc var onPress: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupButton()
+        applyAppearanceMode()
     }
     
     private func setupButton() {
@@ -77,6 +85,10 @@ class NativeButton: UIView {
         configuration.title = title as String
         button.configuration = configuration
     }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
+    }
     
     @objc private func handlePress() {
         onPress?([:])
@@ -85,6 +97,19 @@ class NativeButton: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         button.frame = self.bounds
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
     
     override var intrinsicContentSize: CGSize {

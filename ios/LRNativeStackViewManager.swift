@@ -41,12 +41,19 @@ class NativeStackView: UIView {
             updateDistribution()
         }
     }
+
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
         self.clipsToBounds = false
         setupStackView()
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
@@ -54,6 +61,7 @@ class NativeStackView: UIView {
         self.backgroundColor = .clear
         self.clipsToBounds = false
         setupStackView()
+        applyAppearanceMode()
     }
     
     private func setupStackView() {
@@ -112,6 +120,10 @@ class NativeStackView: UIView {
             stackView.distribution = .fill
         }
     }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
+    }
     
     override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
         if atIndex >= stackView.arrangedSubviews.count {
@@ -147,5 +159,18 @@ class NativeStackView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         invalidateIntrinsicContentSize()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }

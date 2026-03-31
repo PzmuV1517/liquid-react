@@ -31,6 +31,12 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
             }
         }
     }
+
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     
     @objc var onTextChanged: RCTDirectEventBlock?
     @objc var onSearchPressed: RCTDirectEventBlock?
@@ -40,12 +46,14 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
         super.init(frame: frame)
         setupSearchBar()
         backgroundColor = .clear
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupSearchBar()
         backgroundColor = .clear
+        applyAppearanceMode()
     }
     
     private func setupSearchBar() {
@@ -55,6 +63,10 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
         searchBar.backgroundColor = .clear
         searchBar.backgroundImage = UIImage()
         addSubview(searchBar)
+    }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
     }
     
     // MARK: - UISearchBarDelegate
@@ -77,5 +89,18 @@ class NativeSearchBar: UIView, UISearchBarDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         searchBar.frame = bounds
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }

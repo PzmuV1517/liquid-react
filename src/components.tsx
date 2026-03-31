@@ -16,7 +16,12 @@ import {
   RNNativeStackView,
   RNNativeMenuButton,
 } from './nativeComponents';
+import {
+  resolveLiquidReactAppearanceMode,
+  useLiquidReactAppearanceMode,
+} from './appearance';
 import type {
+  AppearanceMode,
   NativeMaterialViewProps,
   NativeButtonProps,
   NativeSwitchProps,
@@ -33,6 +38,11 @@ import type {
   NativeMenuButtonProps,
 } from './types';
 
+function useResolvedAppearanceMode(appearanceMode: AppearanceMode | undefined): AppearanceMode {
+  const inheritedAppearanceMode = useLiquidReactAppearanceMode();
+  return resolveLiquidReactAppearanceMode(appearanceMode, inheritedAppearanceMode);
+}
+
 /**
  * NativeMaterialView - Exposes UIVisualEffectView with system materials
  * 
@@ -40,7 +50,8 @@ import type {
  * All visual properties controlled by iOS.
  */
 export const NativeMaterialView: React.FC<NativeMaterialViewProps> = (props) => {
-  return <RNNativeMaterialView {...props} style={[styles.defaultContainer, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeMaterialView {...props} appearanceMode={appearanceMode} style={[styles.defaultContainer, props.style]} />;
 };
 
 /**
@@ -49,7 +60,8 @@ export const NativeMaterialView: React.FC<NativeMaterialViewProps> = (props) => 
  * Uses native button styles and animations.
  */
 export const NativeButton: React.FC<NativeButtonProps> = (props) => {
-  return <RNNativeButton {...props} style={[styles.defaultButton, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeButton {...props} appearanceMode={appearanceMode} style={[styles.defaultButton, props.style]} />;
 };
 
 /**
@@ -58,7 +70,8 @@ export const NativeButton: React.FC<NativeButtonProps> = (props) => {
  * Native iOS toggle control.
  */
 export const NativeSwitch: React.FC<NativeSwitchProps> = (props) => {
-  return <RNNativeSwitch {...props} style={props.style} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeSwitch {...props} appearanceMode={appearanceMode} style={props.style} />;
 };
 
 /**
@@ -67,7 +80,8 @@ export const NativeSwitch: React.FC<NativeSwitchProps> = (props) => {
  * Native segmented control with system styling.
  */
 export const NativeSegmentedControl: React.FC<NativeSegmentedControlProps> = (props) => {
-  return <RNNativeSegmentedControl {...props} style={[styles.defaultSegmentedControl, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeSegmentedControl {...props} appearanceMode={appearanceMode} style={[styles.defaultSegmentedControl, props.style]} />;
 };
 
 /**
@@ -76,7 +90,8 @@ export const NativeSegmentedControl: React.FC<NativeSegmentedControlProps> = (pr
  * Native search bar with minimal style.
  */
 export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
-  return <RNNativeSearchBar {...props} style={[styles.defaultSearchBar, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeSearchBar {...props} appearanceMode={appearanceMode} style={[styles.defaultSearchBar, props.style]} />;
 };
 
 /**
@@ -85,7 +100,8 @@ export const NativeSearchBar: React.FC<NativeSearchBarProps> = (props) => {
  * Native navigation bar with translucent material.
  */
 export const NativeNavigationBar: React.FC<NativeNavigationBarProps> = (props) => {
-  return <RNNativeNavigationBar {...props} style={[styles.defaultNavigationBar, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeNavigationBar {...props} appearanceMode={appearanceMode} style={[styles.defaultNavigationBar, props.style]} />;
 };
 
 /**
@@ -95,7 +111,8 @@ export const NativeNavigationBar: React.FC<NativeNavigationBarProps> = (props) =
  * Use with NativeToolbarButton and NativeToolbarMenu components.
  */
 export const NativeToolbar: React.FC<NativeToolbarProps> = (props) => {
-  return <RNNativeToolbar {...props} style={[styles.defaultToolbar, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeToolbar {...props} appearanceMode={appearanceMode} style={[styles.defaultToolbar, props.style]} />;
 };
 
 /**
@@ -124,7 +141,8 @@ export const NativeToolbarMenu: React.FC<NativeToolbarMenuProps> = (props) => {
  * Native tab bar with system styling.
  */
 export const NativeTabBar: React.FC<NativeTabBarProps> = (props) => {
-  return <RNNativeTabBar {...props} style={[styles.defaultTabBar, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeTabBar {...props} appearanceMode={appearanceMode} style={[styles.defaultTabBar, props.style]} />;
 };
 
 /**
@@ -133,7 +151,8 @@ export const NativeTabBar: React.FC<NativeTabBarProps> = (props) => {
  * Uses system background colors for grouped list style.
  */
 export const NativeGroupedContainer: React.FC<NativeGroupedContainerProps> = (props) => {
-  return <RNNativeGroupedContainer {...props} style={[styles.defaultContainer, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeGroupedContainer {...props} appearanceMode={appearanceMode} style={[styles.defaultContainer, props.style]} />;
 };
 
 /**
@@ -142,7 +161,8 @@ export const NativeGroupedContainer: React.FC<NativeGroupedContainerProps> = (pr
  * System background with native corner curve.
  */
 export const NativeCardContainer: React.FC<NativeCardContainerProps> = (props) => {
-  return <RNNativeCardContainer {...props} style={[styles.defaultCard, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeCardContainer {...props} appearanceMode={appearanceMode} style={[styles.defaultCard, props.style]} />;
 };
 
 /**
@@ -152,7 +172,8 @@ export const NativeCardContainer: React.FC<NativeCardContainerProps> = (props) =
  * Automatically arranges child views without manual positioning.
  */
 export const NativeStackView: React.FC<NativeStackViewProps> = (props) => {
-  return <RNNativeStackView {...props} style={[styles.defaultStack, props.style]} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeStackView {...props} appearanceMode={appearanceMode} style={[styles.defaultStack, props.style]} />;
 };
 
 /**
@@ -162,7 +183,8 @@ export const NativeStackView: React.FC<NativeStackViewProps> = (props) => {
  * Works anywhere (no UIToolbar parent required).
  */
 export const NativeMenuButton: React.FC<NativeMenuButtonProps> = (props) => {
-  return <RNNativeMenuButton {...props} style={props.style} />;
+  const appearanceMode = useResolvedAppearanceMode(props.appearanceMode);
+  return <RNNativeMenuButton {...props} appearanceMode={appearanceMode} style={props.style} />;
 };
 
 const styles = StyleSheet.create({

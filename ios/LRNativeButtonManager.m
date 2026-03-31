@@ -4,6 +4,7 @@
 
 RCT_EXPORT_VIEW_PROPERTY(title, NSString)
 RCT_EXPORT_VIEW_PROPERTY(buttonStyle, NSString)
+RCT_EXPORT_VIEW_PROPERTY(appearanceMode, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 @end

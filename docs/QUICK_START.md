@@ -100,6 +100,47 @@ function SearchScreen() {
 
 It's `onTextChanged`, not `onChange` or `onChangeText`.
 
+### Global and per-component appearance modes
+
+Use a global default with `LiquidReactAppearanceProvider`, then override on specific components with `appearanceMode`.
+
+```jsx
+import {
+  LiquidReactAppearanceProvider,
+  NativeButton,
+  NativeMaterialView,
+} from 'liquid-react';
+
+function Screen() {
+  return (
+    <LiquidReactAppearanceProvider mode="system">
+      <NativeButton title="Follows iOS System" buttonStyle="filled" />
+
+      <NativeButton
+        title="Always Dark"
+        buttonStyle="borderedProminent"
+        appearanceMode="dark"
+      />
+
+      <NativeMaterialView
+        material="systemMaterial"
+        appearanceMode="auto"
+        style={{ width: '100%', height: 120, borderRadius: 12 }}
+      />
+    </LiquidReactAppearanceProvider>
+  );
+}
+```
+
+Supported values are `auto`, `system`, `light`, and `dark`.
+
+- `auto`: keeps the current UIKit default adaptive behavior.
+- `system`: follows iOS system light/dark mode.
+- `light`: forces light mode.
+- `dark`: forces dark mode.
+
+Precedence: component `appearanceMode` overrides provider `mode`; default is `auto`.
+
 ## Material types
 
 ```jsx
