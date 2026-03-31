@@ -15,6 +15,43 @@ cd ios && pod install
 
 Rebuild your app after that. That's it.
 
+## Appearance mode control
+
+Liquid-react components now support four appearance modes: `auto`, `system`, `light`, and `dark`.
+
+- `auto` keeps the current UIKit default behavior (this is the default)
+- `system` follows the current iOS system light/dark mode
+- `light` forces light mode for that component
+- `dark` forces dark mode for that component
+
+Use `LiquidReactAppearanceProvider` to set a global default, then override per component when needed:
+
+```tsx
+import {
+  LiquidReactAppearanceProvider,
+  NativeButton,
+  NativeMaterialView,
+} from 'liquid-react';
+
+<LiquidReactAppearanceProvider mode="dark">
+  <NativeButton title="Global Dark" buttonStyle="filled" />
+
+  <NativeButton
+    title="Light Override"
+    buttonStyle="borderedProminent"
+    appearanceMode="light"
+  />
+
+  <NativeMaterialView
+    material="systemMaterial"
+    appearanceMode="auto"
+    style={{ width: '100%', height: 120, borderRadius: 12 }}
+  />
+</LiquidReactAppearanceProvider>
+```
+
+Precedence is simple: component `appearanceMode` beats provider `mode`, and if neither is set the component uses `auto`.
+
 ## Components
 
 ### NativeButton

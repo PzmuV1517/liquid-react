@@ -4,6 +4,7 @@
 
 RCT_EXPORT_VIEW_PROPERTY(segments, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(selectedIndex, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(appearanceMode, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onValueChange, RCTBubblingEventBlock)
 
 @end

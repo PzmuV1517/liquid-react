@@ -25,18 +25,25 @@ class NativeMaterialView: UIView {
             updateMaterial()
         }
     }
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     @objc var onPress: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.clipsToBounds = true
         setupView()
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.clipsToBounds = true
         setupView()
+        applyAppearanceMode()
     }
     
     private func setupView() {
@@ -73,6 +80,10 @@ class NativeMaterialView: UIView {
     private func updateMaterial() {
         let blurEffect = getBlurEffect(for: material as String)
         effectView.effect = blurEffect
+    }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
     }
     
     private func getBlurEffect(for material: String) -> UIBlurEffect {
@@ -124,5 +135,18 @@ class NativeMaterialView: UIView {
         super.layoutSubviews()
         effectView.frame = bounds
         contentView.frame = bounds
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }

@@ -16,8 +16,14 @@ export {
   NativeMenuButton,
 } from './components';
 
+export {
+  LiquidReactAppearanceProvider,
+  useLiquidReactAppearanceMode,
+} from './appearance';
+
 // Type exports
 export type {
+  AppearanceMode,
   MaterialType,
   ButtonStyle,
   ToolbarSystemItem,
@@ -49,3 +55,7 @@ export type {
   NativeStackViewProps,
   NativeMenuButtonProps,
 } from './types';
+
+export type {
+  LiquidReactAppearanceProviderProps,
+} from './appearance';

@@ -32,6 +32,10 @@ class NativeMenuButton: UIView {
         didSet { updateMenu() }
     }
 
+    @objc var appearanceMode: NSString = "auto" {
+        didSet { applyAppearanceMode() }
+    }
+
     @objc var onMenuAction: RCTDirectEventBlock?
 
     // MARK: – Init
@@ -39,11 +43,13 @@ class NativeMenuButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
+        applyAppearanceMode()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupButton()
+        applyAppearanceMode()
     }
 
     // MARK: – Setup
@@ -86,6 +92,10 @@ class NativeMenuButton: UIView {
         guard let items = menuItems as? [[String: Any]] else { return }
         let elements = buildMenuElements(from: items)
         button.menu = UIMenu(children: elements)
+    }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
     }
 
     // MARK: – Menu builder (same recursive logic as NativeToolbarMenu)
@@ -137,6 +147,19 @@ class NativeMenuButton: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         invalidateIntrinsicContentSize()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }
 

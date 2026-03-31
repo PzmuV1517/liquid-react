@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0 - 2026-04-08 at 02:21 AM :3
+
+### Added
+- Added `LiquidReactAppearanceProvider` with global `mode` support.
+- Added shared `AppearanceMode` values: `system`, `auto`, `light`, `dark`.
+- Added optional `appearanceMode` prop to visual components:
+  - `NativeMaterialView`
+  - `NativeButton`
+  - `NativeSwitch`
+  - `NativeSegmentedControl`
+  - `NativeSearchBar`
+  - `NativeNavigationBar`
+  - `NativeToolbar`
+  - `NativeTabBar`
+  - `NativeGroupedContainer`
+  - `NativeCardContainer`
+  - `NativeStackView`
+  - `NativeMenuButton`
+
+### Behavior
+- `auto` keeps current UIKit adaptive behavior (default).
+- `system` follows iOS system light/dark mode.
+- `light` forces light mode.
+- `dark` forces dark mode.
+- Precedence: component `appearanceMode` overrides provider `mode`.
+
+### Fixes
+- Fixed React Native autolinking metadata
+
 ## [1.0.0] - 2026-02-08
 
 ### Initial Release 🎉

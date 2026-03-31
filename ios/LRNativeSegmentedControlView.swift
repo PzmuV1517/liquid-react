@@ -31,6 +31,11 @@ class NativeSegmentedControlView: UIView {
             }
         }
     }
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     @objc var onValueChange: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {
@@ -44,6 +49,7 @@ class NativeSegmentedControlView: UIView {
         segmentedControl.backgroundColor = nil
         segmentedControl.tintColor = nil
         segmentedControl.selectedSegmentTintColor = nil
+        applyAppearanceMode()
     }
     required init?(coder: NSCoder) { fatalError() }
     
@@ -60,6 +66,10 @@ class NativeSegmentedControlView: UIView {
             segmentedControl.layoutIfNeeded()
         }
     }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
+    }
     @objc private func handleValueChange() {
         onValueChange?(["selectedIndex": segmentedControl.selectedSegmentIndex])
     }
@@ -69,5 +79,18 @@ class NativeSegmentedControlView: UIView {
         segmentedControl.frame = bounds.insetBy(dx: 4, dy: 4)
         segmentedControl.setNeedsLayout()
         segmentedControl.layoutIfNeeded()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }

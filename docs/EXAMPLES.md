@@ -272,6 +272,39 @@ const styles = StyleSheet.create({
 
 ## Minimal examples
 
+### Appearance modes
+
+```jsx
+import React from 'react';
+import {
+  LiquidReactAppearanceProvider,
+  NativeButton,
+  NativeMaterialView,
+} from 'liquid-react';
+
+export default function AppearanceModesExample() {
+  return (
+    <LiquidReactAppearanceProvider mode="dark">
+      <NativeButton title="Global Dark" buttonStyle="filled" />
+
+      <NativeButton
+        title="Forced Light"
+        buttonStyle="bordered"
+        appearanceMode="light"
+      />
+
+      <NativeMaterialView
+        material="systemChromeMaterial"
+        appearanceMode="auto"
+        style={{ width: '100%', height: 100, borderRadius: 12 }}
+      />
+    </LiquidReactAppearanceProvider>
+  );
+}
+```
+
+`auto` is the default and keeps UIKit's current adaptive behavior. `system` follows iOS system light/dark mode. `light` and `dark` force one appearance.
+
 ### Material view
 
 `NativeMaterialView` renders the blur but doesn't support children right now. Use it as a standalone background element:

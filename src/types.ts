@@ -4,6 +4,8 @@ import type { ReactNode } from 'react';
 type BubblingEventHandler<T> = (event: T) => void;
 type DirectEventHandler<T> = (event: T) => void;
 
+export type AppearanceMode = 'system' | 'auto' | 'light' | 'dark';
+
 // Material types
 export type MaterialType =
 | 'systemUltraThinMaterial'
@@ -122,12 +124,14 @@ index: number;
 export interface NativeMaterialViewProps extends ViewProps {
 material?: MaterialType;
 onPress?: BubblingEventHandler<{}>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeButtonProps extends ViewProps {
 title: string;
 buttonStyle?: ButtonStyle;
 onPress?: BubblingEventHandler<{}>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeSwitchProps extends ViewProps {
@@ -136,12 +140,14 @@ onTintColor?: string;
 thumbTintColor?: string;
 disabled?: boolean;
 onValueChange?: BubblingEventHandler<ValueChangeEvent>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeSegmentedControlProps extends ViewProps {
 segments: string[];
 selectedIndex?: number;
 onValueChange?: BubblingEventHandler<SegmentedControlValueChangeEvent>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeSearchBarProps extends ViewProps {
@@ -150,11 +156,13 @@ text?: string;
 onTextChanged?: DirectEventHandler<SearchBarChangeEvent>;
 onSearchPressed?: DirectEventHandler<SearchBarChangeEvent>;
 onCancelPressed?: DirectEventHandler<{}>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeNavigationBarProps extends ViewProps {
 title?: string;
 translucent?: boolean;
+appearanceMode?: AppearanceMode;
 }
 
 // Event carrying icon+title of the bar button that was tapped.
@@ -165,6 +173,7 @@ export interface ToolbarButtonPressEvent {
 
 export interface NativeToolbarProps extends ViewProps {
   translucent?: boolean;
+  appearanceMode?: AppearanceMode;
   children?: ReactNode;
   /** Fires when a NativeToolbarButton child is pressed. */
   onToolbarButtonPress?: DirectEventHandler<ToolbarButtonPressEvent>;
@@ -193,14 +202,17 @@ items: TabBarItem[];
 selectedIndex?: number;
 translucent?: boolean;
 onTabPress?: BubblingEventHandler<TabBarPressEvent>;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeGroupedContainerProps extends ViewProps {
 insetGrouped?: boolean;
+appearanceMode?: AppearanceMode;
 }
 
 export interface NativeCardContainerProps extends ViewProps {
 cornerRadius?: number;
+appearanceMode?: AppearanceMode;
 }
 
 // Stack view types
@@ -213,10 +225,12 @@ axis?: StackAxis;
 spacing?: number;
 alignment?: StackAlignment;
 distribution?: StackDistribution;
+appearanceMode?: AppearanceMode;
 }
 export interface NativeMenuButtonProps extends ViewProps {
   icon?: string;
   tintColorHex?: string;
   menuItems: ToolbarMenuItem[];
   onMenuAction?: DirectEventHandler<ToolbarMenuActionEvent>;
+  appearanceMode?: AppearanceMode;
 }

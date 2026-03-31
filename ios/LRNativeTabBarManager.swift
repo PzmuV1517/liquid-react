@@ -43,17 +43,25 @@ class NativeTabBar: UIView {
             tabBar.isTranslucent = translucent
         }
     }
+
+    @objc var appearanceMode: NSString = "auto" {
+        didSet {
+            applyAppearanceMode()
+        }
+    }
     
     @objc var onTabPress: RCTBubblingEventBlock?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTabBar()
+        applyAppearanceMode()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupTabBar()
+        applyAppearanceMode()
     }
     
     private func setupTabBar() {
@@ -61,6 +69,10 @@ class NativeTabBar: UIView {
         tabBar.isTranslucent = true
         tabBar.delegate = self
         addSubview(tabBar)
+    }
+
+    private func applyAppearanceMode() {
+        lrApplyAppearanceMode(appearanceMode as String, to: self)
     }
     
     private func updateItems() {
@@ -134,6 +146,19 @@ class NativeTabBar: UIView {
         super.layoutSubviews()
         let height = barHeight?.doubleValue ?? Double(bounds.height)
         tabBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: CGFloat(height))
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        applyAppearanceMode()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (appearanceMode as String) == "system" {
+            applyAppearanceMode()
+        }
     }
 }
 

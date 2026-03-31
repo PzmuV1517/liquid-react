@@ -3,10 +3,38 @@
 Complete reference for all Liquid-React components, props, and types.
 
 ## Table of Contents
+- [Appearance Modes](#appearance-modes)
 - [Materials & Containers](#materials--containers)
 - [Controls](#controls)
 - [Navigation](#navigation)
 - [Types](#types)
+
+---
+
+## Appearance Modes
+
+All visual components support an optional `appearanceMode` prop with these values:
+
+- `auto` (default): keeps the current UIKit adaptive behavior.
+- `system`: follows iOS system light/dark mode.
+- `light`: forces light mode.
+- `dark`: forces dark mode.
+
+Use `LiquidReactAppearanceProvider` to set a global default and override per component when needed.
+
+```jsx
+import {
+  LiquidReactAppearanceProvider,
+  NativeButton,
+} from 'liquid-react';
+
+<LiquidReactAppearanceProvider mode="dark">
+  <NativeButton title="Global Dark" />
+  <NativeButton title="Forced Light" appearanceMode="light" />
+</LiquidReactAppearanceProvider>
+```
+
+**Precedence:** component `appearanceMode` overrides provider `mode`; if neither is set, `auto` is used.
 
 ---
 
@@ -20,6 +48,7 @@ Exposes `UIVisualEffectView` with system blur materials.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `material` | `MaterialType` | `'systemMaterial'` | System blur material style |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onPress` | `() => void` | `undefined` | Called when view is tapped |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 | `children` | `ReactNode` | `undefined` | Child components |
@@ -46,6 +75,7 @@ UIView with system grouped background color.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `insetGrouped` | `boolean` | `true` | Use inset grouped style |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 | `children` | `ReactNode` | `undefined` | Child components |
 
@@ -68,6 +98,7 @@ UIView with continuous corner radius.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `cornerRadius` | `number` | `10` | Corner radius in points |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 | `children` | `ReactNode` | `undefined` | Child components |
 
@@ -93,6 +124,7 @@ Native UIButton with system configurations.
 |------|------|---------|-------------|
 | `title` | `string` | `''` | Button title text (required) |
 | `buttonStyle` | `ButtonStyle` | `'filled'` | System button style |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onPress` | `() => void` | `undefined` | Called when button is pressed |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
@@ -117,6 +149,7 @@ Native UISwitch toggle control.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `value` | `boolean` | `false` | Switch on/off state |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onValueChange` | `(event) => void` | `undefined` | Called when value changes |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
@@ -152,6 +185,7 @@ Native UISegmentedControl for segmented selection.
 |------|------|---------|-------------|
 | `segments` | `string[]` | `[]` | Array of segment titles (required) |
 | `selectedIndex` | `number` | `0` | Currently selected segment index |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onValueChange` | `(event) => void` | `undefined` | Called when selection changes |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
@@ -188,6 +222,7 @@ Native UISearchBar for search input.
 |------|------|---------|-------------|
 | `placeholder` | `string` | `''` | Placeholder text |
 | `text` | `string` | `''` | Current search text |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onChangeText` | `(event) => void` | `undefined` | Called when text changes |
 | `onSearchPress` | `(event) => void` | `undefined` | Called when search button pressed |
 | `onCancelPress` | `() => void` | `undefined` | Called when cancel button pressed |
@@ -230,6 +265,7 @@ Native UINavigationBar for top navigation.
 | `title` | `string` | `''` | Navigation bar title |
 | `barTintColor` | `string` | `undefined` | Bar background color |
 | `translucent` | `boolean` | `true` | Enable translucency |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
 **Example:**
@@ -254,6 +290,7 @@ Native UIToolbar for bottom toolbars.
 |------|------|---------|-------------|
 | `items` | `ToolbarItem[]` | `[]` | Array of toolbar items |
 | `translucent` | `boolean` | `true` | Enable translucency |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
 **ToolbarItem Type:**
@@ -291,6 +328,7 @@ Native UITabBar for tab navigation.
 | `items` | `TabBarItem[]` | `[]` | Array of tab items (required) |
 | `selectedIndex` | `number` | `0` | Currently selected tab index |
 | `translucent` | `boolean` | `true` | Enable translucency |
+| `appearanceMode` | `AppearanceMode` | `'auto'` | Controls appearance behavior (`auto`, `system`, `light`, `dark`) |
 | `onTabPress` | `(event) => void` | `undefined` | Called when tab is pressed |
 | `style` | `ViewStyle` | `undefined` | React Native style object |
 
@@ -332,6 +370,22 @@ const [tab, setTab] = useState(0);
 ---
 
 ## Types
+
+### AppearanceMode
+
+Appearance mode values shared by visual components and `LiquidReactAppearanceProvider`:
+
+```typescript
+type AppearanceMode = 'system' | 'auto' | 'light' | 'dark';
+```
+
+**Semantics:**
+- `auto`: Keep UIKit default adaptive behavior.
+- `system`: Follow iOS system light/dark mode.
+- `light`: Force light mode.
+- `dark`: Force dark mode.
+
+---
 
 ### MaterialType
 

@@ -135,6 +135,8 @@ RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 }
 ```
 
+Appearance mode now uses the same bridge path with an optional `appearanceMode` prop (`auto`, `system`, `light`, `dark`) that maps to `UIView.overrideUserInterfaceStyle` on each native wrapper view.
+
 ### Events (Native → JavaScript)
 ```swift
 @objc var onPress: RCTBubblingEventBlock?

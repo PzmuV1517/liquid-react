@@ -3,5 +3,6 @@
 @interface RCT_EXTERN_MODULE(LRNativeGroupedContainerManager, RCTViewManager)
 
 RCT_EXPORT_VIEW_PROPERTY(insetGrouped, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(appearanceMode, NSString)
 
 @end
