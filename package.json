@@ -1,6 +1,6 @@
 {
   "name": "liquid-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native iOS module exposing Apple's native UIKit Liquid Glass components",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
